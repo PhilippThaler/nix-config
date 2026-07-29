@@ -75,6 +75,7 @@ in {
     fd
     keychain
     ranger
+    tree-sitter
     highlight # ranger file previews
     atool
     mediainfo
