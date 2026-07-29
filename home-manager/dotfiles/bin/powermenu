@@ -1,0 +1,52 @@
+#!/bin/bash
+# Rofi power menu - Catppuccin Frappe themed
+
+THEME='
+* {
+    font: "Inconsolata Nerd Font 14";
+    background: #303446;
+    foreground: #c6d0f5;
+}
+
+window {
+    background-color: #303446;
+    border: 2;
+    border-color: #51576d;
+    border-radius: 12;
+    padding: 20;
+    width: 280;
+}
+
+listview {
+    background-color: transparent;
+    lines: 6;
+    dynamic: true;
+}
+
+element {
+    padding: 10 16;
+    border-radius: 6;
+    text-color: #c6d0f5;
+    background-color: transparent;
+}
+
+element selected {
+    background-color: #f4b8e4;
+    text-color: #303446;
+}
+'
+
+CHOICE=$(printf "󰐥  Power Off\n󰑐  Reboot\n󰒲  Suspend\n󰌾  Lock\n󰍃  Log Out\n󰗽  Cancel" | \
+    rofi -dmenu -i -p "Power Menu" -theme-str "$THEME" -selected-row 5 \
+         -kb-accept-entry "Control+m,Return" \
+         -kb-row-down "Control+j,Down" \
+         -kb-row-up "Control+k,Up" \
+         -kb-remove-to-eol "")
+
+case "$CHOICE" in
+    *"Power Off"*) systemctl poweroff ;;
+    *Reboot*) systemctl reboot ;;
+    *Suspend*) systemctl suspend ;;
+    *Lock*) swaylock -f ;;
+    *"Log Out"*) swaymsg exit ;;
+esac

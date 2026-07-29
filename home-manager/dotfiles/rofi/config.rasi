@@ -1,0 +1,71 @@
+/* Catppuccin Frappe Rofi Theme */
+* {
+    font: "Inconsolata Nerd Font 13";
+    
+    /* Core colors */
+    background: #303446;
+    foreground: #c6d0f5;
+    
+    /* Override all element state colors */
+    lightbg: #303446;
+    lightfg: #c6d0f5;
+    normal-background: #303446;
+    normal-foreground: #c6d0f5;
+    alternate-normal-background: #303446;
+    alternate-normal-foreground: #c6d0f5;
+    selected-normal-background: #f4b8e4;
+    selected-normal-foreground: #303446;
+    active-background: #303446;
+    active-foreground: #f4b8e4;
+    urgent-background: #e78284;
+    urgent-foreground: #c6d0f5;
+    
+    background-color: #303446;
+    text-color: #c6d0f5;
+    border-color: #51576d;
+}
+
+window {
+    background-color: #303446;
+    border: 2;
+    border-color: #51576d;
+    border-radius: 8;
+    padding: 12;
+}
+
+entry {
+    background-color: #414559;
+    text-color: #c6d0f5;
+    cursor-color: #f4b8e4;
+    placeholder-color: #838ba7;
+    placeholder: "Search...";
+    padding: 8 12;
+    border-radius: 6;
+}
+
+listview {
+    background-color: transparent;
+    padding: 4 0;
+    lines: 8;
+    dynamic: true;
+}
+
+element {
+    padding: 6 12;
+    border-radius: 4;
+}
+
+element selected {
+    background-color: #f4b8e4;
+    text-color: #303446;
+}
+
+element.urgent {
+    background-color: #e78284;
+    text-color: #c6d0f5;
+}
+
+element.active {
+    background-color: #414559;
+    text-color: #f4b8e4;
+}

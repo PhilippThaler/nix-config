@@ -1,0 +1,142 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 40,
+    "spacing": 0,
+    "margin-top": 0,
+    "margin-bottom": 0,
+    "margin-left": 0,
+    "margin-right": 0,
+
+    "modules-left": [
+        "sway/workspaces",
+        "sway/mode",
+        "cpu",
+        "memory",
+        "custom/scrolly"
+    ],
+    "modules-center": [
+        "sway/window"
+    ],
+    "modules-right": [
+        "battery",
+        "pulseaudio",
+        "idle_inhibitor",
+        "custom/bluetooth",
+        "custom/gammastep",
+        "network",
+        "clock",
+        "tray"
+    ],
+
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": false,
+        "format": "{name}",
+        "persistent_workspaces": {
+            "1": [], "2": [], "3": [], "4": [],
+            "5": [], "6": [], "7": [], "8": []
+        }
+    },
+
+    "sway/mode": {
+        "format": "<span foreground='#e78284'> {}</span>"
+    },
+
+    "sway/window": {
+        "max-length": 40,
+        "format": "{}"
+    },
+
+    "cpu": {
+        "interval": 3,
+        "format": " {usage}%",
+        "max-length": 10
+    },
+
+    "memory": {
+        "interval": 3,
+        "format": "  {used:0.1f}G",
+        "format-alt": "  {}%",
+        "tooltip-format": "{used:0.1f}G / {total:0.1f}G"
+    },
+
+    "battery": {
+        "interval": 5,
+        "states": {
+            "warning": 20,
+            "critical": 10
+        },
+        "format": "{icon}  {capacity}%",
+        "format-icons": ["", "", "", "", ""],
+        "tooltip-format": "{capacity}% | {time}"
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "  mute",
+        "format-icons": {
+            "default": ["", "", " "]
+        },
+        "scroll-step": 5,
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+        "tooltip-format": "{desc}"
+    },
+
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        },
+        "tooltip-format-activated": "Screen awake",
+        "tooltip-format-deactivated": "Screen sleeps normally"
+    },
+
+    "custom/bluetooth": {
+        "exec": "~/.config/waybar/scripts/bluetooth.sh",
+        "interval": 5,
+        "return-type": "json",
+        "on-click": "bluetoothctl show | grep -q 'Powered: yes' && bluetoothctl power off || bluetoothctl power on",
+        "on-click-right": "~/.config/waybar/scripts/bluetooth-menu.sh",
+        "format": "{}"
+    },
+
+    "network": {
+        "interface": "wlan0",
+        "interval": 10,
+        "format-wifi": "  {signalStrength}%",
+        "format-ethernet": "  {ifname}",
+        "format-disconnected": "",
+        "tooltip-format": "{ipaddr} | {bandwidthDownBits} ↓ {bandwidthUpBits} ↑",
+        "max-length": 20
+    },
+
+    "clock": {
+        "interval": 5,
+        "format": "  {:%Y-%m-%d %H:%M}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>"
+    },
+
+    "tray": {
+        "spacing": 8,
+        "icon-size": 18
+    },
+
+    "custom/scrolly": {
+        "exec": "~/bin/scrolly",
+        "max-length": 50,
+        "on-click": "playerctl play-pause",
+        "on-click-right": "playerctl previous",
+        "on-click-middle": "playerctl next",
+        "format": "{}"
+    },
+
+    "custom/gammastep": {
+        "exec": "~/.config/waybar/scripts/gammastep.sh",
+        "interval": 30,
+        "return-type": "json",
+        "on-click": "if pgrep -x gammastep >/dev/null; then pkill -x gammastep; else gammastep -m wayland -c ~/.config/gammastep/config.ini & fi",
+        "format": "{}"
+    }
+}

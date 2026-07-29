@@ -1,0 +1,131 @@
+/* waybar style — Catppuccin Frappe theme */
+
+* {
+    font-family: "Inconsolata Nerd Font", "Iosevka Nerd Font", "Font Awesome 6 Free", sans-serif;
+    font-size: 14px;
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+}
+
+window#waybar {
+    background-color: #303446;
+    color: #c6d0f5;
+}
+
+/* ── Workspaces ── */
+#workspaces {
+    margin: 0 4px;
+    padding: 0;
+}
+
+#workspaces button {
+    padding: 0 5px;
+    margin: 2px 1px;
+    color: #a5adce;
+    background: transparent;
+    border-radius: 0;
+}
+
+#workspaces button:hover {
+    background: #414559;
+    box-shadow: none;
+    text-shadow: none;
+}
+
+#workspaces button.focused {
+    color: #c6d0f5;
+    background: #51576d;
+    border-radius: 4px;
+}
+
+#workspaces button.urgent {
+    color: #303446;
+    background: #ca9ee6;
+}
+
+#workspaces button.visible {
+    color: #c6d0f5;
+    border-bottom: 2px solid #51576d;
+}
+
+/* ── Modules ── */
+#window,
+#cpu,
+#memory,
+#battery,
+#clock,
+#network,
+#tray,
+#custom-scrolly {
+    padding: 0 10px;
+    margin: 3px 0;
+    color: #c6d0f5;
+}
+
+#window {
+    color: #a5adce;
+    font-style: italic;
+}
+
+#cpu {
+    color: #e78284;
+}
+
+#memory {
+    color: #a6d189;
+}
+
+#battery {
+    color: #a6d189;
+}
+
+#battery.warning {
+    color: #e5c890;
+}
+
+#battery.critical {
+    color: #e78284;
+}
+
+#clock {
+    color: #f4b8e4;
+}
+
+#network {
+    color: #8caaee;
+}
+
+#network.disconnected {
+    color: #e78284;
+}
+
+#custom-scrolly {
+    color: #e5c890;
+}
+
+#pulseaudio { color: #81c8be; }
+#idle_inhibitor { color: #babbf1; }
+#custom-bluetooth { color: #85c1dc; }
+#custom-gammastep { color: #ef9f76; }
+#tray {
+    padding: 0 8px;
+}
+
+/* ── Even spacing ── */
+#pulseaudio,
+#idle_inhibitor,
+#custom-bluetooth,
+#custom-gammastep {
+    padding: 0 8px;
+    margin: 3px 0;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: #e78284;
+}

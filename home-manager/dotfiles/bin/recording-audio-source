@@ -1,0 +1,33 @@
+#!/bin/bash
+# Combined desktop + mic audio source for wf-recorder
+# Usage: record-screen (uses this automatically)
+
+MIX_SINK="recording-mix-sink"
+MIX_SINK_DESC="Recording (Desktop+Mic)"
+
+# Check if already exists
+if pw-cli info "$MIX_SINK" 2>/dev/null | grep -q "node.name"; then
+    # Return the monitor source name
+    echo "${MIX_SINK}.monitor"
+    exit
+fi
+
+# Create null sink
+pw-cli create-node adapter \
+    "{ factory.name=support.null-audio-sink node.name=$MIX_SINK media.class=Audio/Sink monitor.channel-volumes=true }" \
+    >/dev/null 2>&1
+
+sleep 0.3
+
+DEFAULT_SINK_MONITOR="$(pactl get-default-sink).monitor"
+DEFAULT_SOURCE="$(pactl get-default-source)"
+
+# Route desktop audio into the mix sink
+pw-link "$DEFAULT_SINK_MONITOR" "${MIX_SINK}:playback_FL" 2>/dev/null
+pw-link "$DEFAULT_SINK_MONITOR" "${MIX_SINK}:playback_FR" 2>/dev/null
+
+# Route microphone into the mix sink  
+pw-link "$DEFAULT_SOURCE" "${MIX_SINK}:playback_FL" 2>/dev/null
+pw-link "$DEFAULT_SOURCE" "${MIX_SINK}:playback_FR" 2>/dev/null
+
+echo "${MIX_SINK}.monitor"

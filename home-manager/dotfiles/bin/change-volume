@@ -1,0 +1,41 @@
+#!/bin/bash
+# changeVolume — PipeWire edition
+# Changes volume via pactl and shows notification via notify-send
+
+msgTag="myvolume"
+
+# Parse arguments: volume change (±5%) and optional unmute
+vol_arg=""
+for arg in "$@"; do
+    case "$arg" in
+        *%+) vol_arg="+${arg%+}" ;;  # 5%+ → +5%
+        *%-) vol_arg="-${arg%-}" ;;  # 5%- → -5%
+        unmute) pactl set-sink-mute @DEFAULT_SINK@ 0 ;;
+        toggle-mute) pactl set-sink-mute @DEFAULT_SINK@ toggle ;;
+    esac
+done
+
+# Change volume
+[ -n "$vol_arg" ] && pactl set-sink-volume @DEFAULT_SINK@ "$vol_arg"
+
+# Query current volume and mute status
+volume="$(pactl get-sink-volume @DEFAULT_SINK@ | head -1 | awk '{print $5}' | sed 's/%//')"
+mute="$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}')"
+
+if [[ "$mute" == "yes" ]]; then
+    notify-send -a "changeVolume" -u low -i audio-volume-muted \
+        -h "string:x-canonical-private-synchronous:$msgTag" \
+        "Muted"
+elif [[ $volume == 0 ]]; then
+    notify-send -a "changeVolume" -u low -i audio-volume-muted \
+        -h "string:x-canonical-private-synchronous:$msgTag" \
+        "Volume: 0%"
+else
+    notify-send -a "changeVolume" -u low -i audio-volume-high \
+        -h "string:x-canonical-private-synchronous:$msgTag" \
+        -h "int:value:$volume" \
+        "Volume: ${volume}%"
+fi
+
+# Play feedback sound
+paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga 2>/dev/null

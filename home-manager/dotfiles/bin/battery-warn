@@ -1,0 +1,30 @@
+#!/bin/bash
+# Battery low warning daemon for swaync
+# Sends critical notification at 10% and 5%
+
+BAT_PATH="/sys/class/power_supply/BAT0"
+
+LAST_WARN=100
+LAST_CRIT=100
+
+while true; do
+    CAPACITY=$(cat "$BAT_PATH/capacity" 2>/dev/null)
+    STATUS=$(cat "$BAT_PATH/status" 2>/dev/null)
+    
+    # Only warn when discharging
+    if [ "$STATUS" = "Discharging" ]; then
+        if [ "$CAPACITY" -le 5 ] && [ "$LAST_CRIT" -gt 5 ]; then
+            notify-send "󰁹 Battery Critical" "${CAPACITY}% — Plug in NOW" -u critical -t 15000
+            LAST_CRIT="$CAPACITY"
+        elif [ "$CAPACITY" -le 10 ] && [ "$LAST_WARN" -gt 10 ]; then
+            notify-send "󰁺 Battery Low" "${CAPACITY}% remaining" -u normal -t 10000
+            LAST_WARN="$CAPACITY"
+        fi
+    else
+        # Reset when charging
+        LAST_WARN=100
+        LAST_CRIT=100
+    fi
+    
+    sleep 60
+done

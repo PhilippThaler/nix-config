@@ -1,0 +1,26 @@
+#!/bin/bash
+# Click to kill: pick a point with slurp, find the window there, kill it
+
+point=$(slurp -p -c '#ff0000ff' 2>/dev/null)
+[ -z "$point" ] && exit 0
+
+# slurp -p outputs: "x,y WxH" (e.g. "862,477 1x1")
+read -r coords _ <<< "$point"
+IFS=',' read -r x y <<< "$coords"
+
+# Find the window at that position
+con_id=$(swaymsg -t get_tree | jq -r --argjson x "$x" --argjson y "$y" '
+    def rect_contains($r):
+        $r.x <= $x and $x < $r.x + $r.width
+        and $r.y <= $y and $y < $r.y + $r.height;
+    first(
+        recurse(.nodes[], .floating_nodes[]) 
+        | select(.pid != null and .rect != null and rect_contains(.rect))
+        | .id
+    ) // empty
+' 2>/dev/null)
+
+if [ -n "$con_id" ]; then
+    swaymsg "[con_id=$con_id]" kill
+    notify-send "☠️ Killed" -t 1500
+fi

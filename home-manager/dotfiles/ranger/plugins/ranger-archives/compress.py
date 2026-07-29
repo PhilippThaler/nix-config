@@ -1,0 +1,60 @@
+from pathlib import Path
+from re import search
+from ranger.api.commands import Command
+from ranger.core.loader import CommandLoader
+from .archives_utils import parse_escape_args, ArchiveCompressor
+
+
+class compress(Command):
+    def execute(self):
+        """Compress marked files to current directory"""
+        cwd = self.fm.thisdir
+        marked_files = cwd.get_selection()
+        files_num = len(marked_files)
+
+        if not marked_files:
+            return
+
+        # Preparing names of archived files with cross-platform path handling
+        cwd_path = Path(cwd.path)
+        filenames = [str(Path(f.path).relative_to(cwd_path)) for f in marked_files]
+
+        # Parsing arguments
+        flags = parse_escape_args(self.line.strip())[1:]
+        archive_name = None
+
+        if flags:
+            flags_last = flags.pop()
+
+            if search(r".*?\.\w+", flags_last) is None:
+                flags += [flags_last]
+            else:
+                archive_name = flags_last
+
+        if not archive_name:
+            archive_name = f"{Path(self.fm.thisdir.path).name}.zip"
+
+        # Preparing command for archiver
+        archive_name = archive_name.strip("'")
+        command = ArchiveCompressor.get_command(archive_name, flags, filenames)
+
+        print(command)
+        # Making description line
+        files_num_str = f"{files_num} objects" if files_num > 1 else "1 object"
+        descr = f"Compressing {files_num_str} -> {Path(archive_name).name}"
+
+        # Creating archive
+        obj = CommandLoader(args=command, descr=descr, read=True)
+
+        def refresh(_):
+            _cwd = self.fm.get_directory(cwd.path)
+            _cwd.load_content()
+
+        obj.signal_bind("after", refresh)
+        self.fm.loader.add(obj)
+
+    def tab(self, tabnum):
+        """Complete with current folder name"""
+
+        extension = [".7z", ".zip", ".tar.gz", ".tar.bz2", ".tar.xz"]
+        return [f"compress {Path(self.fm.thisdir.path).name}{ext}" for ext in extension]

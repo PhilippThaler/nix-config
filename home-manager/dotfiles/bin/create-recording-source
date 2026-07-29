@@ -1,0 +1,45 @@
+#!/bin/bash
+# Create a combined audio source (desktop + mic) for recording
+# Returns the PipeWire node ID of the combined source
+
+COMBINED_NAME="recording-mix"
+
+# Remove previous instance if exists
+pw-cli destroy "$COMBINED_NAME" 2>/dev/null
+
+# Create a null sink that mixes desktop audio (monitor) + microphone
+SINK_ID=$(pw-cli create-node adapter '{ 
+    factory.name=support.null-audio-sink
+    node.name="'"$COMBINED_NAME"'-sink"
+    media.class=Audio/Sink
+    object.linger=1
+    audio.position=[FL,FR]
+}' | grep -oP '\d+')
+
+sleep 0.2
+
+# Get default speaker monitor and mic
+MONITOR=$(pactl get-default-sink).monitor
+MIC=$(pactl get-default-source)
+
+# Connect monitor to recording sink
+pw-link "$MONITOR" "$COMBINED_NAME-sink:playback_FL" 2>/dev/null
+pw-link "$MONITOR" "$COMBINED_NAME-sink:playback_FR" 2>/dev/null
+
+# Create monitor source for the sink (writable so it captures)
+MONITOR_SOURCE=$(pw-cli create-node adapter '{
+    factory.name=support.null-audio-sink
+    node.name="'"$COMBINED_NAME"'-source"
+    media.class=Audio/Source
+    object.linger=1
+    monitor.channel-volumes=false
+    audio.position=[FL,FR]
+}' | grep -oP '\d+')
+
+sleep 0.2
+
+# Combine mic + desktop into the null sink
+pw-loopback --capture-props='media.class=Audio/Sink' \
+    --playback-props='node.target='"$COMBINED_NAME"'-sink' &
+    
+echo "$COMBINED_NAME-source"

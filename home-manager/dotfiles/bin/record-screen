@@ -1,0 +1,33 @@
+#!/bin/bash
+# Start/stop screen recording with wf-recorder
+# Toggle behavior: if already recording, stop. Otherwise, start.
+# Audio: desktop + microphone combined
+
+PIDFILE="/tmp/wf-recorder.pid"
+
+if [ -f "$PIDFILE" ] && kill -0 "$(cat $PIDFILE)" 2>/dev/null; then
+    # Stop recording
+    kill "$(cat $PIDFILE)" 2>/dev/null
+    rm -f "$PIDFILE"
+    # Clean up the PipeWire audio sink
+    pw-cli destroy recording-mix-sink 2>/dev/null
+    notify-send "Recording" "Saved to ~/Videos" -u normal
+else
+    # Set up combined audio source
+    AUDIO_SOURCE=$($HOME/bin/recording-audio-source)
+    
+    # Start recording
+    mkdir -p ~/Videos
+    FILE="$HOME/Videos/recording-$(date +%Y%m%d-%H%M%S).mp4"
+    
+    if [ "$1" = "region" ]; then
+        GEOMETRY=$(slurp)
+        [ -z "$GEOMETRY" ] && exit
+        wf-recorder -g "$GEOMETRY" -f "$FILE" -a "$AUDIO_SOURCE" &
+    else
+        wf-recorder -f "$FILE" -a "$AUDIO_SOURCE" &
+    fi
+    
+    echo $! > "$PIDFILE"
+    notify-send "Recording" "Desktop+Mic (click to stop)" -u low
+fi

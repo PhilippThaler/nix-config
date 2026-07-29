@@ -1,0 +1,28 @@
+#!/bin/bash
+direction=$1
+
+pkill -STOP autotiling 2>/dev/null
+sleep 0.1
+
+# Navigate to the container level where actual siblings exist.
+# Autotiling wraps every window in its own sub-container, so
+# we may need to go up two levels to find the real siblings.
+swaymsg "focus parent" 2>/dev/null
+parent=$(swaymsg -t get_tree | jq -r '
+    first(recurse(.nodes[]) | 
+        select(.focused==true) | 
+        .parent | select(.nodes | length <= 1)
+    ) // empty' 2>/dev/null)
+[ -n "$parent" ] && swaymsg "focus parent" 2>/dev/null
+
+# Force the correct split direction so move behaves as a swap
+case "$direction" in
+    left|right) swaymsg "layout splith" 2>/dev/null ;;
+    up|down)    swaymsg "layout splitv" 2>/dev/null ;;
+esac
+
+swaymsg move "$direction" 2>/dev/null
+swaymsg "focus child" 2>/dev/null
+
+sleep 0.3
+pkill -CONT autotiling 2>/dev/null

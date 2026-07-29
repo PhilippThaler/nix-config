@@ -1,0 +1,45 @@
+#!/bin/bash
+# Inspiration from https://github.com/miroslavvidovic/rofi-scripts/blob/master/books-search/books-search.sh
+# Little Rofi Script to quickly open and edit cheatsheets
+#
+# Using 'for_window [title="rofi-cheatsheet-helper"] floating enable border none'
+# in i3 to open the files in a floating window
+
+ROFI_CHEATSHEET_DIR=~/.config/rofi-cheatsheet-helper/cheatsheets/
+mkdir -p $ROFI_CHEATSHEET_DIR
+
+# List for rofi
+gen_list(){
+  cd $ROFI_CHEATSHEET_DIR
+  for file in *.cheatsheet; do
+    echo ${file}
+  done
+}
+
+main() {
+  local MESG="""
+    Press <b>Enter</b> to open the files for reading
+    With <b>Alt-e</b> you can edit your cheatsheets
+  """
+  cheatsheet=$( (gen_list) | rofi -dmenu -i -matching fuzzy -no-custom -location 0 -mesg "${MESG}" -p "Cheatsheet > " -kb-custom-1 "Alt-e" )
+  RET=$?
+  # Alt-e opens the file in $EDITOR 
+  if [ "${RET}" = 10 ]; then
+    if [ -n "$cheatsheet" ]; then
+      kitty -T rofi-cheatsheet-helper -e $EDITOR "${ROFI_CHEATSHEET_DIR}/${cheatsheet}"
+    else
+      return 1
+    fi
+  # Return opens the file in $PAGER
+  elif [ "${RET}" = 0 ]; then
+    if [ -n "$cheatsheet" ]; then
+      kitty -T rofi-cheatsheet-helper -e $PAGER "${ROFI_CHEATSHEET_DIR}/${cheatsheet}"
+    else
+      return 1
+    fi
+  fi
+}
+
+main
+
+exit 0

@@ -1,0 +1,15 @@
+#!/bin/bash
+# Toggle a dropdown kitty terminal in Sway's scratchpad.
+
+TITLE="scratchpad_dropdown"
+
+if swaymsg -t get_tree | grep -q "$TITLE"; then
+    # Terminal exists — toggle its visibility
+    swaymsg "[title=\"$TITLE\"] scratchpad show, resize set 1200 1000, move position center"
+    # If it was just hidden, kill ueberzug overlays so they don't stick around
+    sleep 0.2
+    pkill -f 'ueberzug.*layer' 2>/dev/null
+else
+    # No scratchpad yet — launch one
+    kitty --title "$TITLE" &
+fi

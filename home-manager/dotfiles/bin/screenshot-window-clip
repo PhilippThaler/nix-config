@@ -1,0 +1,4 @@
+#!/bin/bash
+# Active window screenshot to clipboard (no file saved)
+RECT=$(swaymsg -t get_tree | jq -r '.. | select(.focused?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"')
+grim -g "$RECT" - | wl-copy
