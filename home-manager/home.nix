@@ -28,6 +28,10 @@
 
   waybarScripts = ["bluetooth.sh" "clipboard.sh" "gammastep.sh" "notifications.sh"];
 in {
+  imports = [
+    ./nvim.nix
+  ];
+
   home.username = "philipp";
   home.homeDirectory = "/home/philipp";
   home.stateVersion = "26.05";
@@ -93,6 +97,7 @@ in {
     rsync
     sshfs
     nmap
+    rtk
 
     # Dev
     neovim
@@ -118,6 +123,7 @@ in {
     # GUI apps
     librewolf
     spotify
+    pi-coding-agent
     libreoffice-fresh
     gimp
     mpv
@@ -313,8 +319,8 @@ in {
   gtk = {
     enable = true;
     theme = {
-      name = "Arc-Dark";
-      package = pkgs.arc-theme;
+      name = "adw-gtk3-dark";
+      package = pkgs.adw-gtk3;
     };
     iconTheme = {
       name = "Qogir-dark";
