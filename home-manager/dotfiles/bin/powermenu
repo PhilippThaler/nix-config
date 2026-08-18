@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Rofi power menu - Catppuccin Frappe themed
 
 THEME='

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Start/stop screen recording with wf-recorder
 # Toggle behavior: if already recording, stop. Otherwise, start.
 # Audio: desktop + microphone combined

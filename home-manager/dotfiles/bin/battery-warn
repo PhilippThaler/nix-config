@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Battery low warning daemon for swaync
 # Sends critical notification at 10% and 5%
 

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 direction=$1
 
 pkill -STOP autotiling 2>/dev/null

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # changeVolume — PipeWire edition
 # Changes volume via pactl and shows notification via notify-send
 

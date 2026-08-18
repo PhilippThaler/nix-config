@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Click to kill: pick a point with slurp, find the window there, kill it
 
 point=$(slurp -p -c '#ff0000ff' 2>/dev/null)

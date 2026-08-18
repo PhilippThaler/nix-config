@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Toggle a dropdown kitty terminal in Sway's scratchpad.
 
 TITLE="scratchpad_dropdown"

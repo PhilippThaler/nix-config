@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Inspiration from https://github.com/miroslavvidovic/rofi-scripts/blob/master/books-search/books-search.sh
 # Little Rofi Script to quickly open and edit cheatsheets
 #

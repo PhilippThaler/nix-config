@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Active window screenshot to clipboard
 RECT=$(swaymsg -t get_tree | jq -r '.. | select(.focused?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"')
 grim -g "$RECT" ~/Pictures/screenshot-$(date +%Y-%m-%d-%H%M%S).png
