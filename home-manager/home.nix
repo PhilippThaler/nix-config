@@ -78,7 +78,7 @@ in {
     ripgrep
     fd
     keychain
-    ranger
+    yazi
     tree-sitter
     highlight # ranger file previews
     atool
@@ -194,6 +194,7 @@ in {
       wbconf = "cd ~/.config/waybar && nvim ~/.config/waybar/config && cd -";
       nixconf = "cd ~/nix-config";
       nixrebuild = "sudo nixos-rebuild switch --flake ~/nix-config#nixos";
+      ranger = "yazi";
     };
 
     oh-my-zsh = {
