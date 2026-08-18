@@ -71,6 +71,8 @@ seat * xcursor_theme capitaine-cursors 36
     bindsym $mod+Shift+v exec --no-startup-id $HOME/bin/record-screen
     bindsym $mod+Ctrl+v exec --no-startup-id $HOME/bin/record-screen region
 
+    bindsym $mod+Shift+i exec $HOME/bin/sway-wininfo
+
     # Display settings GUI
     bindsym $mod+Shift+p exec wdisplays
 
@@ -221,19 +223,21 @@ assign [app_id="neomutt"] $ws4
 # no_focus [title=".*neomutt.*"]
 # for_window [app_id="signal" title="Signal"] exec --no-startup-id $HOME/bin/signal-ws4
 # for_window [title=".*neomutt.*"] exec --no-startup-id $HOME/bin/neomutt-ws4
+# for_window [title=".*neomutt.*"] exec --no-startup-id "sleep 0.3; swaymsg [workspace=4] layout stacking"
 
 # ============================================================
 # FOR_WINDOW RULES
 # ============================================================
 for_window [title="alsamixer"] floating enable, border pixel 1
-for_window [class="mpv"] floating enable, border pixel 0
+for_window [app_id="mpv"] floating enable, border pixel 0
 for_window [title="File Transfer*"] floating enable
-for_window [class="Galculator"] floating enable, border pixel 1
+for_window [app_id="(?i)galculator"] floating enable, border pixel 1
 for_window [class="GParted"] floating enable, border normal
 for_window [title="rofi-cheatsheet-helper"] floating enable, border none
-for_window [class="Pavucontrol"] floating enable
-for_window [class="Simple-scan"] floating enable, border normal
-for_window [class="(?i)System-config-printer.py"] floating enable, border normal
+for_window [app_id="(?i)pavucontrol"] floating enable
+for_window [app_id="(?i)SimpleScan"] floating enable, border normal
+for_window [app_id="delve-terminal"] floating enable, resize set 1000 600, move position center
+for_window [app_id="(?i)system-config-printer"] floating enable, border normal
 for_window [urgent=latest] focus
 
 # ============================================================
@@ -306,7 +310,7 @@ mode "$mode_gaps_outer" {
 # ============================================================
 
 # PolicyKit agent
-exec --no-startup-id @POLKIT_AGENT@
+exec --no-startup-id /usr/lib/mate-polkit/polkit-mate-authentication-agent-1
 
 # XDG Desktop Portal for file pickers (auto-started via D-Bus by applications)
 
@@ -315,6 +319,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id nextcloud
 
 # KDE Connect
+exec --no-startup-id /usr/bin/kdeconnectd
 exec --no-startup-id sh -c 'sleep 2 && kdeconnect-indicator'
 
 # Notification center
@@ -322,18 +327,22 @@ exec --no-startup-id sh -c 'sleep 2 && kdeconnect-indicator'
 exec --no-startup-id swaync
 
 # Battery low warning daemon
-exec_always --no-startup-id sh -c 'pkill -x battery-warn; /home/philipp/bin/battery-warn'
+exec_always --no-startup-id sh -c 'pkill battery-warn; /home/philipp/bin/battery-warn'
 
 # Screen temperature (redshift replacement)
 exec --no-startup-id gammastep -m wayland -c $HOME/.config/gammastep/config.ini
 
+exec --no-startup-id kitty --class siggy siggy
+exec --no-startup-id kitty --class neomutt neomutt
+exec --no-startup-id sh -c 'sleep 2; swaymsg [workspace=4] layout stacking'
 
 # Auto-tiling (uses i3ipc, works with Sway)
 exec --no-startup-id autotiling -l 2
 
 # Screen idle & lock daemon
-exec_always --no-startup-id sh -c 'pkill -x swayidle; exec /home/philipp/bin/swayidle-daemon'
+exec_always --no-startup-id sh -c 'pkill swayidle; exec /home/philipp/bin/swayidle-daemon'
 
 # Waybar (kill old instance before launching, same pattern as polybar)
-exec_always --no-startup-id sh -c 'pkill -x waybar; waybar'
+exec_always --no-startup-id sh -c 'pkill waybar; waybar'
 
+include /etc/sway/config.d/*
