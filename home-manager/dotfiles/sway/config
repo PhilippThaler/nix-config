@@ -25,6 +25,7 @@ input type:keyboard {
 
 input type:touchpad {
     tap enabled
+    drag_lock disabled
     scroll_factor 1.0
 }
 
