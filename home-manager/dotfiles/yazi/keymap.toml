@@ -1,0 +1,14 @@
+# Minimal yazi keymap override.
+# Everything not listed here uses yazi's defaults.
+
+#:schema https://yazi-rs.github.io/schemas/keymap.json
+
+[mgr]
+prepend_keymap = [
+	# <Backspace> toggles hidden files (they stay hidden by default)
+	{ on = "<Backspace>", run = "hidden toggle", desc = "Toggle the visibility of hidden files" },
+
+	# exd = e*xtract* to *d*irectory: unpack the hovered/selected archive(s)
+	# into a folder using atool (aunpack). Runs in yazi's current directory.
+	{ on = [ "e", "x", "d" ], run = 'shell "aunpack %s"', desc = "Extract archive to a folder (atool)" },
+]

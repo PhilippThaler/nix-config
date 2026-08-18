@@ -360,6 +360,8 @@ in {
 
       "rofi-cheatsheet-helper/cheatsheets".source = ./dotfiles/rofi-cheatsheet-helper/cheatsheets;
       "rofi-cheatsheet-helper/cheatsheets".recursive = true;
+
+      "yazi/keymap.toml".source = ./dotfiles/yazi/keymap.toml;
     }
     // builtins.listToAttrs (map (name: {
         name = "waybar/scripts/${name}";
