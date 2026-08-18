@@ -1,4 +1,4 @@
-# nix-config — ThinkPad T440
+# nix-config
 
 NixOS configuration ported from my Arch dotfiles. Single command deploys the
 entire system: kernel → desktop → dotfiles → user packages.
