@@ -20,6 +20,7 @@
     "rofi-cheatsheet-helper"
     "screenshot-full"
     "screenshot-region"
+    "screenshot-region-clip"
     "screenshot-window"
     "screenshot-window-clip"
     "swayidle-daemon"
