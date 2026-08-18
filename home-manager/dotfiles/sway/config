@@ -64,8 +64,8 @@ seat * xcursor_theme capitaine-cursors 36
     # Screenshots & Recording
     bindsym Print exec --no-startup-id $HOME/bin/screenshot-full
     bindsym $mod+Print exec --no-startup-id $HOME/bin/screenshot-window-clip
-    bindsym $mod+Ctrl+Print exec --no-startup-id $HOME/bin/screenshot-window
-    bindsym $mod+Shift+Print exec --no-startup-id $HOME/bin/screenshot-region
+    bindsym $mod+Ctrl+Print exec --no-startup-id $HOME/bin/screenshot-region
+    bindsym $mod+Shift+Print exec --no-startup-id $HOME/bin/screenshot-region-clip
 
     bindsym $mod+Shift+v exec --no-startup-id $HOME/bin/record-screen
     bindsym $mod+Ctrl+v exec --no-startup-id $HOME/bin/record-screen region

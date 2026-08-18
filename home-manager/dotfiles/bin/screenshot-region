@@ -1,3 +1,3 @@
-#!/usr/bin/env bash
-# Region screenshot to clipboard
-grim -g "$(slurp)" - | wl-copy
+#!/bin/bash
+# Region screenshot saved to ~/Pictures
+grim -g "$(slurp)" "$HOME/Pictures/screenshot-$(date +%Y-%m-%d-%H%M%S).png"
