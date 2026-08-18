@@ -1,4 +1,3 @@
-# NixOS system configuration — ThinkPad T440 ("nixos")
 { config, pkgs, lib, ... }:
 {
   imports = [
@@ -6,9 +5,14 @@
   ];
 
   # ── Boot ──────────────────────────────────────────────────────────
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
-  boot.loader.grub.useOSProber = true;
+  # boot.loader.grub.enable = true;
+  # boot.loader.grub.device = "/dev/sda";
+  # boot.loader.grub.useOSProber = true;
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  boot.initrd.systemd.enable = true;
+  boot.resumeDevice = "/dev/mapper/luks-24967593-22f2-49cd-8aee-1d03c77a9c05";
 
   # ── Networking ────────────────────────────────────────────────────
   networking.hostName = "nixos";
