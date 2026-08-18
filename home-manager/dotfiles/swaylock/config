@@ -6,7 +6,7 @@ indicator-idle-visible
 clock
 
 timestr=%H:%M
-datestr=%A, %d. %B %Y
+datestr=%a %F
 
 image=/home/philipp/Pictures/wallpaper.jpg
 scaling=fill
@@ -37,7 +37,7 @@ line-wrong-color=#303446
 separator-color=#51576d
 
 font=Inconsolata Nerd Font
-font-size=36
+font-size=80
 
-indicator-radius=160
+indicator-radius=120
 indicator-thickness=10
