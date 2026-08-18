@@ -136,7 +136,7 @@
         "exec": "~/.config/waybar/scripts/gammastep.sh",
         "interval": 30,
         "return-type": "json",
-        "on-click": "if pgrep -x gammastep >/dev/null; then pkill -x gammastep; else gammastep -m wayland -c ~/.config/gammastep/config.ini & fi",
+        "on-click": "if pgrep -x .gammastep-wrap >/dev/null || pgrep -x gammastep >/dev/null; then pkill -x .gammastep-wrap; pkill -x gammastep; else gammastep -m wayland -c ~/.config/gammastep/config.ini & fi",
         "format": "{}"
     }
 }

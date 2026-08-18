@@ -327,7 +327,7 @@ exec --no-startup-id sh -c 'sleep 2 && kdeconnect-indicator'
 exec --no-startup-id swaync
 
 # Battery low warning daemon
-exec_always --no-startup-id sh -c 'pkill battery-warn; /home/philipp/bin/battery-warn'
+exec_always --no-startup-id sh -c 'pkill -f "bash /home/philipp/bin/[b]attery-warn"; exec /home/philipp/bin/battery-warn'
 
 # Screen temperature (redshift replacement)
 exec --no-startup-id gammastep -m wayland -c $HOME/.config/gammastep/config.ini

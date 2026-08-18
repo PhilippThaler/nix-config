@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # gammastep waybar module — shows night light status and toggles on click
 
-if pgrep -x gammastep >/dev/null 2>&1; then
+# nixpkgs ships gammastep as a wrapper script, so the process name is
+# ".gammastep-wrap" (from the renamed .gammastep-wrapped binary), not "gammastep"
+if pgrep -x .gammastep-wrap >/dev/null 2>&1 || pgrep -x gammastep >/dev/null 2>&1; then
     period=$(gammastep -p 2>&1 | grep "Period" | awk '{print $3}')
     temp=$(gammastep -p 2>&1 | grep "temperature" | awk '{print $4}')
     case "$period" in

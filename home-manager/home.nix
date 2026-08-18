@@ -15,15 +15,17 @@
     "force-kill"
     "move-window"
     "powermenu"
-    "recording-audio-source"
     "record-screen"
+    "recording-audio-source"
     "rofi-cheatsheet-helper"
     "screenshot-full"
     "screenshot-region"
     "screenshot-region-clip"
     "screenshot-window"
     "screenshot-window-clip"
+    "sway-wininfo"
     "swayidle-daemon"
+    "switch"
     "toggle_scratchpad"
   ];
 

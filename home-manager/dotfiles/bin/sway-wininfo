@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+INFO=$(swaymsg -t get_tree | jq -r '.. | select(.focused? == true) | "App ID: \(.app_id // "N/A")\nClass: \(.window_properties.class // "N/A")\nTitle: \(.name)"')
+notify-send "Window Info" "$INFO"
