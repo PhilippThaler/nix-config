@@ -1,0 +1,35 @@
+sensors:
+  # PCH chipset temperature (thermal_zone1 -> pch_skylake)
+  - hwmon: /sys/devices/virtual/thermal/thermal_zone1/hwmon4
+    indices: [1]
+    optional: true # thermal zone numbering can shift; don't crash if missing
+
+  # ThinkPad embedded controller (CPU temperature)
+  - hwmon: /sys/devices/platform/thinkpad_hwmon/hwmon/hwmon5
+    indices: [1]
+
+  # CPU core temperatures (3 sensors: package + 2 cores)
+  - hwmon: /sys/devices/platform/coretemp.0/hwmon/hwmon6
+    indices: [1, 2, 3]
+
+  # ACPI thermal zone (motherboard/system temperature)
+  - hwmon: /sys/devices/virtual/thermal/thermal_zone0/hwmon3
+    indices: [1]
+    optional: true # thermal zone numbering can shift; don't crash if missing
+
+  # NVMe SSD temperature (3 sensors: composite + 2 internal)
+  - hwmon: /sys/devices/pci0000:00/0000:00:1c.4/0000:05:00.0/nvme/nvme0/hwmon0
+    indices: [1, 2, 3]
+
+fans:
+  - tpacpi: /proc/acpi/ibm/fan
+
+levels:
+  - [0, 0, 50]
+  - [1, 50, 55]
+  - [2, 55, 60]
+  - [3, 60, 65]
+  - [4, 65, 70]
+  - [5, 70, 75]
+  - [6, 75, 80]
+  - [7, 80, 32767]
