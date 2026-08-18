@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Shows bluetooth status for waybar
 
 if ! bluetoothctl show 2>/dev/null | grep -q "Powered: yes"; then

@@ -103,7 +103,7 @@
     },
 
     "network": {
-        "interface": "wlan0",
+        "interface": "wlp4s0",
         "interval": 10,
         "format-wifi": "  {signalStrength}%",
         "format-ethernet": "  {ifname}",

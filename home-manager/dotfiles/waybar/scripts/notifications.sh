@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Shows pending notification count from swaync
 count=$(swaync-client -c 2>/dev/null)
 dnd=$(swaync-client -D 2>/dev/null)

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # gammastep waybar module — shows night light status and toggles on click
 
 if pgrep -x gammastep >/dev/null 2>&1; then

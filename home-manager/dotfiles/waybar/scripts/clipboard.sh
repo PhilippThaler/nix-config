@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Shows clipboard status for waybar
 
 COUNT=$(cliphist list 2>/dev/null | wc -l)
