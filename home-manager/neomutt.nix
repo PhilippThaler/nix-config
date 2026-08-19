@@ -73,8 +73,12 @@
       alternative_order text/calendar text/plain text/enriched text/html
       set show_multipart_alternative = inline
 
-      # ── Theme (ported from old muttrc) ─────────────────────────────
-      color normal         default default   # Text is "Text"
+      # ── Theme: Catppuccin (via kitty's 16-color palette, Frappe) ────
+      # These indexed colorN values follow the terminal's palette, so they only
+      # look right because kitty.conf includes current-theme.conf = Frappe.
+      # (Explicit #RRGGBB would be nicer but NixOS's xterm-kitty terminfo lacks
+      # setrgbf/setrgbb, so neomutt disables direct colour and errors on hex.)
+      color normal          default default   # Text is "Text"
       color index           color2 default ~N       # New Messages are Green
       color index           color1 default ~F       # Flagged messages are Red
       color index           color13 default ~T      # Tagged Messages are Red
@@ -83,11 +87,11 @@
       color signature       color8 default          # Signatures are Surface 2
       color search          color4 default          # Highlighted results are Blue
 
-      color indicator       default color8          # highlighted message
+      color indicator       default color8          # highlighted message (Surface 2 bg)
       color error           color1 default          # error messages are Red
       color status          color15 default         # status line "Subtext 0"
-      color tree            color15 default         # thread tree arrows
-      color tilde           color15 default         # blank line padding
+      color tree            color15 default         # thread tree arrows Subtext 0
+      color tilde           color15 default         # blank line padding Subtext 0
 
       color hdrdefault      color13 default         # default headers Pink
       color header          color13 default "^From:"
@@ -100,9 +104,9 @@
       color quoted4         color0 default
       color quoted5         color0 default
 
-      color body  color2 default [\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+               # email addresses Green
-      color body  color2 default (https?|ftp)://[\-\.,/%~_:?&=\#a-zA-Z0-9]+        # URLs Green
-      color body  color4 default (^|[[:space:]])\*[^[:space:]]+\*([[:space:]]|$)    # *bold* text Blue
+      color body  color2 default [\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+             # email addresses Green
+      color body  color2 default (https?|ftp)://[\-\.,/%~_:?&=\#a-zA-Z0-9]+      # URLs Green
+      color body  color4 default (^|[[:space:]])[*][^[:space:]]+[*]([[:space:]]|$)  # *bold* text Blue
       color body  color4 default (^|[[:space:]])_[^[:space:]]+_([[:space:]]|$)      # _underlined_ text Blue
       color body  color4 default (^|[[:space:]])/[^[:space:]]+/([[:space:]]|$)      # /italic/ text Blue
 
