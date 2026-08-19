@@ -96,7 +96,13 @@
       # Explicit #RRGGBB would need setrgbf/setrgbb, which NixOS's xterm-kitty
       # terminfo lacks, so neomutt disables direct colour and errors on hex.
       color normal          default default
-      color index           color2 default ~N
+      # Unread/new messages get a Surface 1 background (Frappe color0) so they
+      # stand out from read mail. Kept DIFFERENT from the cursor/indicator bg
+      # (color8) so the cursor stays visible even on an unread line.
+      # Order matters: ~U covers new too, then ~N re-colors just the text of
+      # brand-new messages green on the same bg.
+      color index           color7 color0 ~U
+      color index           color2 color0 ~N
       color index           color1 default ~F
       color index           color13 default ~T
       color index           color1 default ~D
