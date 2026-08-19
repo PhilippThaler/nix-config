@@ -69,6 +69,10 @@
 
       neomutt = {
         enable = true;
+        # Register the account's folders so the sidebar shows them (HM only
+        # registers Inbox by default; Sent/Drafts/Trash/Archive/Spam exist in the
+        # maildir from mbsync).
+        extraMailboxes = [ "Sent" "Drafts" "Trash" "Archive" "Spam" ];
         # HM's account.gpg module sets crypt_autosign but IGNORES gpg.key, so
         # the signing key must be wired in here explicitly (signing subkey [S]).
         # Account-scoped crypt + cache settings ported from old account muttrc.
