@@ -49,6 +49,7 @@ and in the boot menu — you can always go back.
 │   └── hardware-configuration.nix  # auto-generated (disk layout, CPU, GPU)
 ├── home-manager/
 │   ├── home.nix               # your packages, zsh, git, dotfiles
+│   ├── email.nix              # neomutt + mbsync + msmtp + pass (Spacemail)
 │   └── dotfiles/              # raw config files ported from ~/dotfiles
 │       ├── bin/               #    ~/bin scripts (battery-warn, screenshot-*, …)
 │       ├── sway/config        #    sway config (with @POLKIT_AGENT@ placeholder)
@@ -222,10 +223,19 @@ name: value                 # lambda
 /* multi-line */
 ```
 
+### Sync and read email (neomutt + mbsync + msmtp)
+
+Declarative replacement for mutt-wizard, defined in `home-manager/email.nix`:
+
+- `mbsync -a` — sync mail from Spacemail (IMAP `mail.spacemail.com:993`) into `~/Maildir/spacemail/`
+- `neomutt` — the client (sidebar + vim keys), sends via msmtp (`mail.spacemail.com:465`)
+
+Passwords come from `pass` — store at `~/.password-store`, entry `email/philipp@thaler.fyi`
+(mutt-wizard layout). To sign/encrypt mail, uncomment the `gpg` block in `email.nix`
+and set your key id from `gpg --list-keys`.
+
 ## What's missing (not ported from the Arch machine)
 
-- **Mail stack** (neomutt, khal, khard, vdirsyncer, mutt-wizard, isync) — excluded
-  by choice, can be added later as a separate module
 - **Android Studio, IntelliJ, GoLand** — install manually or add as packages
 - **Chromium** — add `chromium` to `home.packages` if needed
 - **NVM** — `nodejs_22` from nixpkgs replaces it; `npm install -g` works with
