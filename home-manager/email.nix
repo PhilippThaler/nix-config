@@ -22,6 +22,16 @@
     vimKeys = true;
   };
 
+  # rofi launches neomutt inside kitty (it's a TUI).
+  xdg.desktopEntries.neomutt = {
+    name = "NeoMutt";
+    genericName = "Email Client";
+    comment = "Terminal email client";
+    exec = "kitty -e neomutt";
+    terminal = false; # exec already wraps neomutt in kitty
+    categories = [ "Network" "Email" ];
+  };
+
   programs.mbsync.enable = true; # isync — pulls IMAP → ~/Maildir
   programs.msmtp.enable = true; # sends via SMTP
 
