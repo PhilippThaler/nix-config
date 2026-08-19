@@ -127,6 +127,8 @@ in {
     librewolf
     spotify
     pi-coding-agent
+    mqtt-explorer
+    tiny-rdm
     libreoffice-fresh
     gimp
     mpv
