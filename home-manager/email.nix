@@ -32,6 +32,7 @@
   programs.gpg.enable = true; # installs gnupg, sane ~/.gnupg/gpg.conf (0700)
   services.gpg-agent = {
     enable = true; # passphrase caching; neomutt expects the agent
+    pinentry.package = pkgs.pinentry-egui; # modern egui dialog (wayland/X11 via winit)
     defaultCacheTtl = 1800; # 30 min
     maxCacheTtl = 7200; # 2 h
   };
