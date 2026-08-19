@@ -71,15 +71,23 @@
         expunge = "both";
       };
 
-      neomutt.enable = true;
+      neomutt = {
+        enable = true;
+        # HM's account.gpg module sets crypt_autosign but IGNORES gpg.key, so
+        # the signing key must be wired in here explicitly (signing subkey [S]).
+        extraConfig = ''
+          set crypt_sign_as = "FC7404E97136D53E34BB557F3A5D1B1D62B7F9C4"
+          set pgp_sign_as = "FC7404E97136D53E34BB557F3A5D1B1D62B7F9C4"
+          set pgp_default_key = "FC7404E97136D53E34BB557F3A5D1B1D62B7F9C4"
+        '';
+      };
       msmtp.enable = true; # generate an msmtp account entry for this account
 
-      # Message signing/encryption. To enable, run `gpg --list-keys`, set your
-      # key id below and uncomment:
-      # gpg = {
-      #   key = "ABCDEF1234567890";
-      #   signByDefault = true;
-      # };
+      # Sign outbound mail (sets crypt_autosign = yes in neomutt).
+      gpg = {
+        key = "FC7404E97136D53E34BB557F3A5D1B1D62B7F9C4";
+        signByDefault = true;
+      };
     };
   };
 }
