@@ -86,7 +86,6 @@
         # HM's account.gpg module sets crypt_autosign but IGNORES gpg.key, so
         # the signing key must be wired in here explicitly (signing subkey [S]).
         extraConfig = ''
-          set crypt_sign_as = "FC7404E97136D53E34BB557F3A5D1B1D62B7F9C4"
           set pgp_sign_as = "FC7404E97136D53E34BB557F3A5D1B1D62B7F9C4"
           set pgp_default_key = "FC7404E97136D53E34BB557F3A5D1B1D62B7F9C4"
         '';
