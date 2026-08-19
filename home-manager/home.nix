@@ -140,6 +140,7 @@ in {
     nextcloud-client
     filezilla
     inkscape
+    seahorse
     xarchiver
   ];
 
