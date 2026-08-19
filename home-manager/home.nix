@@ -15,6 +15,7 @@ in {
     ./neomutt.nix
   ];
 
+
   home.username = "philipp";
   home.homeDirectory = "/home/philipp";
   home.stateVersion = "26.05";
@@ -93,6 +94,7 @@ in {
     ansible
     ansible-lint
     gh
+    cargo
     git-filter-repo
     nil
     alejandra
