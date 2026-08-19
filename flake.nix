@@ -1,5 +1,5 @@
 {
-  description = "Philipp's NixOS configuration (ThinkPad T440)";
+  description = "Philipp's NixOS configuration";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -19,7 +19,6 @@
       modules = [
         ./nixos/configuration.nix
 
-        # Home Manager as a NixOS module: one `nixos-rebuild switch` deploys both
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;

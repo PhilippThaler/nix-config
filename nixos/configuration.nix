@@ -113,17 +113,17 @@
   # GPU drivers (not enabled by default without xserver!) — required for sway
   hardware.graphics = {
     enable = true;
-    extraPackages = with pkgs; [ intel-vaapi-driver ]; # Haswell VA-API
+    extraPackages = with pkgs; [ intel-vaapi-driver ];
   };
   services.upower.enable = true;
   services.thermald.enable = true;
-  services.udev.packages = [ pkgs.brightnessctl ]; # udev rules for brightness keys
+  services.udev.packages = [ pkgs.brightnessctl ];
 
   # ── Services ──────────────────────────────────────────────────────
   services.gvfs.enable = true;
   services.openssh.enable = true;
   security.polkit.enable = true;
-  programs.dconf.enable = true; # GTK/dconf settings backend
+  programs.dconf.enable = true;
   services.gnome.gnome-keyring.enable = true;
   programs.kdeconnect.enable = true;
   virtualisation.docker.enable = true;

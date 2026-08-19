@@ -1,8 +1,0 @@
-^J                          sidebar-next
-^K                          sidebar-prev
-^B                          start UrlView
-T                           Tag messages matching (.* for all)
-;                           to do operations on tagged msgs (eg D to delete all tagged msgs)
-\r                          Mark all as Read
-\f                          notmuch search
-A                           Clear filter/Show all

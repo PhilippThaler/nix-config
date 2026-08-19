@@ -1,13 +1,3 @@
-# ThinkPad fan control sensors — use STABLE device paths, never /hwmonN.
-#
-# Why: hwmon N numbers shift at runtime whenever USB-C chargers/batteries
-# appear (ucsi_source_psy / AC / BAT0 entries renumber everything after BAT0).
-# The old config hardcoded e.g. .../thinkpad_hwmon/hwmon/hwmon5, so plugging in
-# a USB-C device made thinkfan crash-loop ("Error scanning .../hwmon5").
-#
-# Fix: point each sensor at a STABLE parent dir (platform/PCI/virtual path
-# WITHOUT the hwmonN leaf). thinkfan 2.x recurses into the hwmonN subdir.
-# Sensors whose root is genuinely volatile (thermal zones) stay `optional`.
 sensors:
   # CPU package + 2 physical cores (i5-4300U, 2C/4T → 3 temps)
   - hwmon: /sys/devices/platform/coretemp.0/hwmon
@@ -44,3 +34,4 @@ levels:
   - [5, 70, 75]
   - [6, 75, 80]
   - [7, 80, 32767]
+

@@ -67,26 +67,26 @@ func addPrefix(text string) string {
 
 func getShortenedText(text string) string {
 	chars := []rune(text)
-	var shortened string
+	var shortened strings.Builder
 	for i := 0; i < len(chars); i++ {
-		shortened += string(chars[i])
+		shortened.WriteRune(chars[i])
 		if i >= MaxLength {
 			break
 		}
 	}
-	return shortened
+	return shortened.String()
 }
 
 func shiftLetters(text string) string {
 	text = strings.ReplaceAll(text, "\n", "")
 	chars := []rune(text)
-	var shifted string
+	var shifted strings.Builder
 	for i := 0; i < len(chars); i++ {
 		if i+1 == len(chars) {
-			shifted += string(chars[0])
+			shifted.WriteRune(chars[0])
 			break
 		}
-		shifted += string(chars[i+1])
+		shifted.WriteRune(chars[i+1])
 	}
-	return shifted
+	return shifted.String()
 }

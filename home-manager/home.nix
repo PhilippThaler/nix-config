@@ -1,4 +1,3 @@
-# Home Manager configuration — ported from ~/dotfiles (Arch machine)
 {
   config,
   pkgs,
@@ -7,7 +6,7 @@
 }: let
   scrolly = pkgs.callPackage ../pkgs/scrolly {};
 
-  # ~/bin helper scripts (ported verbatim from dotfiles/bin/bin)
+  # ~/bin helper scripts
   binScripts = [
     "battery-warn"
     "change-volume"
@@ -33,8 +32,8 @@
 in {
   imports = [
     ./nvim.nix
-    ./email.nix # account wiring: neomutt + mbsync + msmtp + pass + gpg
-    ./neomutt.nix # client prefs: colors, macros, keybindings, mailcap
+    ./email.nix
+    ./neomutt.nix
   ];
 
   home.username = "philipp";
@@ -45,12 +44,11 @@ in {
 
   # ── Packages ──────────────────────────────────────────────────────
   home.packages = with pkgs; [
-    # Wayland desktop
     kitty
     waybar
-    rofi # Wayland-enabled build (rofi-wayland was merged upstream)
+    rofi
     rofimoji
-    swaynotificationcenter # swaync
+    swaynotificationcenter
     swayidle
     swaylock-effects
     swaybg
@@ -71,9 +69,9 @@ in {
     wtype
     jq
     mate-polkit
-    pulseaudio # pactl / paplay (PipeWire pulse server)
-    pipewire # pw-cli / pw-link (recording scripts)
-    wireplumber # wpctl
+    pulseaudio
+    pipewire
+    wireplumber
     kdePackages.kdeconnect-kde # kdeconnect-indicator (sway autostart)
     scrolly
 
@@ -85,7 +83,7 @@ in {
     keychain
     yazi
     tree-sitter
-    highlight # ranger file previews
+    highlight
     atool
     mediainfo
     ffmpegthumbnailer
@@ -93,7 +91,7 @@ in {
     w3m
     btop
     duf
-    gtrash # trash CLI (`tp` alias)
+    gtrash
     tree
     unzip
     zip
@@ -106,7 +104,7 @@ in {
 
     # Dev
     neovim
-    gcc # treesitter parser compilation
+    gcc
     gnumake
     go
     gopls
@@ -117,8 +115,8 @@ in {
     ansible-lint
     gh
     git-filter-repo
-    nil # nix LSP
-    alejandra # nix formatter
+    nil
+    alejandra
     typst
     pandoc
     pre-commit
@@ -194,7 +192,7 @@ in {
       rm = "echo -e 'If you want to use rm really, then use \"tp\" or \"rmd\" instead.'; false";
       rmd = "command rm";
       tp = "gtrash put";
-      # config shortcuts
+
       zshconfig = "nvim ~/.zshrc";
       zshenv = "nvim ~/.zshenv";
       nvimconfig = "cd ~/.config/nvim && nvim init.lua && cd -";
@@ -237,7 +235,6 @@ in {
       }
     ];
 
-    # ~/.zshenv additions (was: dotfiles/zsh/.zshenv)
     envExtra = ''
       export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
       export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=2'
@@ -246,9 +243,7 @@ in {
       export POWERLEVEL9K_MODE='nerdfont-complete'
     '';
 
-    # ~/.zshrc additions (was: dotfiles/zsh/.zshrc)
     initContent = lib.mkMerge [
-      # zsh-completions: extra fpath entries must exist before compinit runs
       (lib.mkOrder 550 ''
         fpath+=("${pkgs.zsh-completions}/share/zsh/site-functions")
       '')
@@ -263,7 +258,7 @@ in {
       [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
       eval "$(zoxide init zsh)"
       eval $(keychain --eval --quiet ~/.ssh/ansible_key)
-      
+
 
       # Allow `$ command` (for pasting snippets that include the prompt)
       function $ { "$@" }
@@ -345,7 +340,7 @@ in {
     createDirectories = true;
   };
 
-  # ── Dotfiles (raw, ported from ~/dotfiles) ────────────────────────
+  # ── Dotfiles ──────────────────────────────────────────────────────
   xdg.configFile =
     {
       # sway config with store-path substitution for the polkit agent
@@ -363,12 +358,6 @@ in {
       "swaylock/config".source = ./dotfiles/swaylock/config;
       "gammastep/config.ini".source = ./dotfiles/gammastep/config.ini;
       "mimeapps.list".source = ./dotfiles/mimeapps.list;
-
-      "ranger".source = ./dotfiles/ranger;
-      "ranger".recursive = true;
-
-      "rofi-cheatsheet-helper/cheatsheets".source = ./dotfiles/rofi-cheatsheet-helper/cheatsheets;
-      "rofi-cheatsheet-helper/cheatsheets".recursive = true;
 
       "yazi/keymap.toml".source = ./dotfiles/yazi/keymap.toml;
     }

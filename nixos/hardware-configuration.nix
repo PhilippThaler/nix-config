@@ -21,7 +21,6 @@
   boot.initrd.luks.devices."luks-d6cdecef-37b5-4e45-bbb8-3c85eb24ef19".device = "/dev/disk/by-uuid/d6cdecef-37b5-4e45-bbb8-3c85eb24ef19";
   boot.initrd.luks.devices."luks-24967593-22f2-49cd-8aee-1d03c77a9c05".device = "/dev/disk/by-uuid/24967593-22f2-49cd-8aee-1d03c77a9c05";
 
-
   fileSystems."/home" =
     { device = "/dev/mapper/luks-d6cdecef-37b5-4e45-bbb8-3c85eb24ef19";
       fsType = "btrfs";

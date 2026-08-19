@@ -14,7 +14,7 @@ if [ -f "$PIDFILE" ] && kill -0 "$(cat $PIDFILE)" 2>/dev/null; then
     notify-send "Recording" "Saved to ~/Videos" -u normal
 else
     # Set up combined audio source
-    AUDIO_SOURCE=$($HOME/bin/recording-audio-source)
+    AUDIO_SOURCE=$("$HOME/bin/recording-audio-source")
     
     # Start recording
     mkdir -p ~/Videos
