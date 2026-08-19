@@ -26,7 +26,15 @@
   programs.msmtp.enable = true; # sends via SMTP
 
   # ── Passwords: pass (passwordstore) ───────────────────────────────
-  programs.password-store.enable = true;
+  programs.password-store.enable = true; # pass CLI + extensions
+
+  # ── GPG — required by pass (store encryption) and neomutt (signing) ──
+  programs.gpg.enable = true; # installs gnupg, sane ~/.gnupg/gpg.conf (0700)
+  services.gpg-agent = {
+    enable = true; # passphrase caching; neomutt expects the agent
+    defaultCacheTtl = 1800; # 30 min
+    maxCacheTtl = 7200; # 2 h
+  };
 
   # ── Account: philipp@thaler.fyi (Spacemail) ───────────────────────
   accounts.email = {
