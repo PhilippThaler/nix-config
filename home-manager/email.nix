@@ -15,23 +15,7 @@
   lib,
   ...
 }: {
-  # ── Client / sync / send ──────────────────────────────────────────
-  programs.neomutt = {
-    enable = true;
-    sidebar.enable = true;
-    vimKeys = true;
-  };
-
-  # rofi launches neomutt inside kitty (it's a TUI).
-  xdg.desktopEntries.neomutt = {
-    name = "NeoMutt";
-    genericName = "Email Client";
-    comment = "Terminal email client";
-    exec = "kitty -e neomutt";
-    terminal = false; # exec already wraps neomutt in kitty
-    categories = [ "Network" "Email" ];
-  };
-
+  # Client prefs (colors, macros, keybindings, theme) live in neomutt.nix.
   programs.mbsync.enable = true; # isync — pulls IMAP → ~/Maildir
   programs.msmtp.enable = true; # sends via SMTP
 
@@ -85,12 +69,35 @@
         enable = true;
         # HM's account.gpg module sets crypt_autosign but IGNORES gpg.key, so
         # the signing key must be wired in here explicitly (signing subkey [S]).
+        # Account-scoped crypt + cache settings ported from old account muttrc.
         extraConfig = ''
           set pgp_sign_as = "FC7404E97136D53E34BB557F3A5D1B1D62B7F9C4"
           set pgp_default_key = "FC7404E97136D53E34BB557F3A5D1B1D62B7F9C4"
+
+          set crypt_verify_sig = yes
+          set crypt_autopgp = yes
+          set crypt_autoencrypt = no
+          set crypt_opportunistic_encrypt = yes
+          set postpone_encrypt = yes
+          set pgp_self_encrypt = yes
+          set crypt_use_pka = no
+
+          set header_cache = "~/.cache/mutt/headers"
+          set message_cachedir = "~/.cache/mutt/bodies"
+          set hostname = "thaler.fyi"
         '';
       };
       msmtp.enable = true; # generate an msmtp account entry for this account
+
+      # German signature (ported from ~/dotfiles/mutt). showSignature must be
+      # non-"none" or HM emits `unset signature`.
+      signature = {
+        text = ''
+          Mit freundlichen Grüßen
+          Philipp Thaler
+        '';
+        showSignature = "append";
+      };
 
       # Sign outbound mail (sets crypt_autosign = yes in neomutt).
       gpg = {

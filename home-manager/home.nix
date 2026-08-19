@@ -33,7 +33,8 @@
 in {
   imports = [
     ./nvim.nix
-    ./email.nix # neomutt + mbsync + msmtp + pass (replaces mutt-wizard)
+    ./email.nix # account wiring: neomutt + mbsync + msmtp + pass + gpg
+    ./neomutt.nix # client prefs: colors, macros, keybindings, mailcap
   ];
 
   home.username = "philipp";
