@@ -30,6 +30,9 @@
   programs.neomutt = {
     enable = true;
     sidebar.enable = true;
+    # Flat newest-first. HM's default is "threads" (rendered into the per-account
+    # file, so it would override the base's reverse-date on every folder entry).
+    sort = "reverse-date";
     # vimKeys intentionally OFF: mutt-wizard's base muttrc already ships its own
     # vi-style bindings (gg/G, j/k, d/u, l/h, g-prefix folder jumps). HM's
     # vim-keys.rc also binds gT/dT/dd with `d noop`, which directly conflicts
