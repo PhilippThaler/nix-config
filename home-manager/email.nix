@@ -65,7 +65,12 @@
         expunge = "both";
       };
 
-      notmuch.enable = true; # index ~/.local/share/mail/spacemail for notmuch search (Ctrl-F)
+      notmuch = {
+        enable = true; # index ~/.local/share/mail/spacemail for notmuch search (Ctrl-F)
+        # Drop HM's default "My INBOX" notmuch virtual mailbox (redundant with the
+        # real Inbox in the sidebar); keep Ctrl-F notmuch search.
+        neomutt.virtualMailboxes = [ ];
+      };
 
       neomutt = {
         enable = true;
