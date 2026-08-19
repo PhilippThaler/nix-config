@@ -71,6 +71,13 @@
       macro index,pager MS ";<save-message>=Spam<enter>" "move mail to spam"
       macro index,pager CS ";<copy-message>=Spam<enter>" "copy mail to spam"
 
+      # Spacemail's folder names are UI-style "Inbox" (not IMAP "INBOX"), so
+      # re-point the go-to/move/copy macros at the real name. Spam stays on gS/MS/CS
+      # (no "Junk" folder, so the base's gj/Mj/Cj are left as-is/unused).
+      macro index,pager gi "<change-folder>=Inbox<enter>" "go to inbox"
+      macro index,pager Mi ";<save-message>=Inbox<enter>" "move mail to inbox"
+      macro index,pager Ci ";<copy-message>=Inbox<enter>" "copy mail to inbox"
+
       # abook is not installed — drop mutt-wizard's address-book integration
       unset query_command
       unmacro index,pager a
