@@ -227,7 +227,7 @@ name: value                 # lambda
 
 Declarative replacement for mutt-wizard, defined in `home-manager/email.nix`:
 
-- `mbsync -a` — sync mail from Spacemail (IMAP `mail.spacemail.com:993`) into `~/Maildir/spacemail/`
+- `mbsync -a` — sync mail from Spacemail (IMAP `mail.spacemail.com:993`) into `~/.local/share/mail/spacemail/`
 - `neomutt` — the client (sidebar + vim keys), sends via msmtp (`mail.spacemail.com:465`)
 
 Passwords come from `pass` — store at `~/.password-store`, entry `email/philipp@thaler.fyi`

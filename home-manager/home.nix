@@ -202,6 +202,7 @@ in {
       wbconf = "cd ~/.config/waybar && nvim ~/.config/waybar/config && cd -";
       nixconf = "cd ~/nix-config";
       nixrebuild = "sudo nixos-rebuild switch --flake ~/nix-config#nixos";
+      mutt = "neomutt";
       ranger = "yazi";
     };
 

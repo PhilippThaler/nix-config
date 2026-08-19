@@ -4,7 +4,7 @@
 # Home Manager's `accounts.email` module wires all four together from this file.
 #
 # After `nixrebuild`:
-#   1. First sync:   mbsync -a        (mail lands in ~/Maildir/spacemail/)
+#   1. First sync:   mbsync -a        (mail lands in ~/.local/share/mail/spacemail/)
 #   2. Client:       neomutt          (opens with this account sourced)
 #
 # If the server's folder names differ (Sent/Drafts/Trash), fix them below in
@@ -16,7 +16,7 @@
   ...
 }: {
   # Client prefs (colors, macros, keybindings, theme) live in neomutt.nix.
-  programs.mbsync.enable = true; # isync — pulls IMAP → ~/Maildir
+  programs.mbsync.enable = true; # isync — pulls IMAP → ~/.local/share/mail
   programs.msmtp.enable = true; # sends via SMTP
 
   # ── Passwords: pass (passwordstore) ───────────────────────────────
@@ -33,7 +33,7 @@
 
   # ── Account: philipp@thaler.fyi (Spacemail) ───────────────────────
   accounts.email = {
-    maildirBasePath = "Maildir"; # → ~/Maildir/<account>/
+    maildirBasePath = ".local/share/mail"; # → ~/.local/share/mail/<account>/
 
     accounts.spacemail = {
       primary = true; # exactly one account must be primary
@@ -64,6 +64,8 @@
         create = "both"; # create missing local + remote mailboxes
         expunge = "both";
       };
+
+      notmuch.enable = true; # index ~/.local/share/mail/spacemail for notmuch search (Ctrl-F)
 
       neomutt = {
         enable = true;
