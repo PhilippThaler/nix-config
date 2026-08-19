@@ -6,28 +6,7 @@
 }: let
   scrolly = pkgs.callPackage ../pkgs/scrolly {};
 
-  # ~/bin helper scripts
-  binScripts = [
-    "battery-warn"
-    "change-volume"
-    "create-recording-source"
-    "force-kill"
-    "move-window"
-    "powermenu"
-    "record-screen"
-    "recording-audio-source"
-    "rofi-cheatsheet-helper"
-    "screenshot-full"
-    "screenshot-region"
-    "screenshot-region-clip"
-    "screenshot-window"
-    "screenshot-window-clip"
-    "sway-wininfo"
-    "swayidle-daemon"
-    "switch"
-    "toggle_scratchpad"
-  ];
-
+  # ~/bin helper scripts (auto-discovered from dotfiles/bin)
   waybarScripts = ["bluetooth.sh" "clipboard.sh" "gammastep.sh" "notifications.sh"];
 in {
   imports = [
@@ -377,12 +356,12 @@ in {
       "bin/scrolly".source = "${scrolly}/bin/scrolly";
       "bin/scrolly".executable = true;
     }
-    // builtins.listToAttrs (map (name: {
-        name = "bin/${name}";
-        value = {
-          source = ./dotfiles/bin + "/${name}";
-          executable = true;
-        };
-      })
-      binScripts);
+    // lib.mapAttrs' (name: _: {
+          name = "bin/" + name;
+          value = {
+            source = ./dotfiles/bin + "/${name}";
+            executable = true;
+          };
+        })
+      (builtins.readDir ./dotfiles/bin);
 }
