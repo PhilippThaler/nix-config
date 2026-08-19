@@ -1,25 +1,36 @@
+# ThinkPad fan control sensors — use STABLE device paths, never /hwmonN.
+#
+# Why: hwmon N numbers shift at runtime whenever USB-C chargers/batteries
+# appear (ucsi_source_psy / AC / BAT0 entries renumber everything after BAT0).
+# The old config hardcoded e.g. .../thinkpad_hwmon/hwmon/hwmon5, so plugging in
+# a USB-C device made thinkfan crash-loop ("Error scanning .../hwmon5").
+#
+# Fix: point each sensor at a STABLE parent dir (platform/PCI/virtual path
+# WITHOUT the hwmonN leaf). thinkfan 2.x recurses into the hwmonN subdir.
+# Sensors whose root is genuinely volatile (thermal zones) stay `optional`.
 sensors:
-  # PCH chipset temperature (thermal_zone1 -> pch_skylake)
-  - hwmon: /sys/devices/virtual/thermal/thermal_zone1/hwmon4
-    indices: [1]
-    optional: true # thermal zone numbering can shift; don't crash if missing
-
-  # ThinkPad embedded controller (CPU temperature)
-  - hwmon: /sys/devices/platform/thinkpad_hwmon/hwmon/hwmon5
-    indices: [1]
-
-  # CPU core temperatures (3 sensors: package + 2 cores)
-  - hwmon: /sys/devices/platform/coretemp.0/hwmon/hwmon6
+  # CPU package + 2 physical cores (i5-4300U, 2C/4T → 3 temps)
+  - hwmon: /sys/devices/platform/coretemp.0/hwmon
     indices: [1, 2, 3]
 
-  # ACPI thermal zone (motherboard/system temperature)
-  - hwmon: /sys/devices/virtual/thermal/thermal_zone0/hwmon3
+  # ThinkPad embedded controller (EC) — closest to chassis temperature
+  - hwmon: /sys/devices/platform/thinkpad_hwmon/hwmon
     indices: [1]
-    optional: true # thermal zone numbering can shift; don't crash if missing
 
-  # NVMe SSD temperature (3 sensors: composite + 2 internal)
-  - hwmon: /sys/devices/pci0000:00/0000:00:1c.4/0000:05:00.0/nvme/nvme0/hwmon0
+  # NVMe SSD (composite + 2 internal temps); hwmon0 hangs directly off nvme0
+  - hwmon: /sys/devices/pci0000:00/0000:00:1c.4/0000:05:00.0/nvme/nvme0
     indices: [1, 2, 3]
+    optional: true
+
+  # ACPI system temperature (acpitz) — zone numbering can shift
+  - hwmon: /sys/devices/virtual/thermal/thermal_zone0
+    indices: [1]
+    optional: true
+
+  # PCH chipset temperature — zone numbering can shift
+  - hwmon: /sys/devices/virtual/thermal/thermal_zone1
+    indices: [1]
+    optional: true
 
 fans:
   - tpacpi: /proc/acpi/ibm/fan
