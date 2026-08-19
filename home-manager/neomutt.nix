@@ -30,10 +30,9 @@
       macro index o "<shell-escape>mbsync -a<enter>" "sync all mail"
       macro index O "<shell-escape>mbsync -a<enter>" "sync all mail"
 
-      # A = mark all new as read (base's A = show all)
       macro index A \
-          "<tag-pattern>~N<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" \
-          "mark all new as read"
+          "<tag-pattern>~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" \
+          "mark all unread as read"
 
       # Spam box (upstream has none); folders are "Inbox"/"Spam", not "INBOX"/"Junk"
       macro index,pager gS "<change-folder>=Spam<enter>" "go to spam"
