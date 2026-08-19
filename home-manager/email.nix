@@ -7,6 +7,30 @@
   programs.mbsync.enable = true;
   programs.msmtp.enable = true;
 
+  # ── Automatic mail sync every 3 minutes ───────────────────
+  systemd.user.services.mailsync = {
+    Unit = {
+      Description = "Sync mail (mbsync -a)";
+      After = [ "network-online.target" ];
+      Wants = [ "network-online.target" ];
+    };
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.isync}/bin/mbsync -a";
+    };
+  };
+
+  systemd.user.timers.mailsync = {
+    Unit = {
+      Description = "Run mbsync every 3 minutes";
+    };
+    Timer = {
+      OnCalendar = "*:0/3";
+      Persistent = true;
+    };
+    Install.WantedBy = [ "timers.target" ];
+  };
+
   programs.password-store.enable = true;
 
   programs.gpg.enable = true;
