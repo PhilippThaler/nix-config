@@ -3,6 +3,7 @@
   imports = [
     ./hardware-configuration.nix
     ./thinkfan.nix
+    ./btrbk.nix
   ];
 
   # ── Boot ──────────────────────────────────────────────────────────
@@ -113,7 +114,7 @@
   # GPU drivers (not enabled by default without xserver!) — required for sway
   hardware.graphics = {
     enable = true;
-    extraPackages = with pkgs; [ intel-vaapi-driver ];
+    extraPackages = with pkgs; [ intel-vaapi-driver intel-media-driver ]; # Kaby Lake (X1 Carbon 5th): iHD for full HEVC decode
   };
   services.upower.enable = true;
   services.thermald.enable = true;
