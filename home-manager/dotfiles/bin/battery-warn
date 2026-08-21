@@ -13,10 +13,10 @@ while true; do
     
     # Only warn when discharging
     if [ "$STATUS" = "Discharging" ]; then
-        if [ "$CAPACITY" -le 5 ] && [ "$LAST_CRIT" -gt 5 ]; then
+        if [ "$CAPACITY" -le 10 ] && [ "$LAST_CRIT" -gt 10 ]; then
             notify-send "󰁹 Battery Critical" "${CAPACITY}% — Plug in NOW" -u critical -t 15000
             LAST_CRIT="$CAPACITY"
-        elif [ "$CAPACITY" -le 10 ] && [ "$LAST_WARN" -gt 10 ]; then
+        elif [ "$CAPACITY" -le 15 ] && [ "$LAST_WARN" -gt 15 ]; then
             notify-send "󰁺 Battery Low" "${CAPACITY}% remaining" -u normal -t 10000
             LAST_WARN="$CAPACITY"
         fi
