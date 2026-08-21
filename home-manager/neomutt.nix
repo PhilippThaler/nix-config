@@ -5,6 +5,7 @@
   home.packages = [
     pkgs.lynx
     pkgs.notmuch
+    pkgs.urlscan
   ];
 
   programs.notmuch.enable = true;
@@ -33,6 +34,14 @@
       macro index A \
           "<tag-pattern>~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" \
           "mark all unread as read"
+
+
+      macro index,pager \cb \
+          "<pipe-message> urlscan<Enter>" \
+          "call urlscan to extract URLs out of a message"
+      macro attach,compose \cb \
+          "<pipe-entry> urlscan<Enter>" \
+          "call urlscan to extract URLs out of a message"
 
       # Spam box (upstream has none); folders are "Inbox"/"Spam", not "INBOX"/"Junk"
       macro index,pager gS "<change-folder>=Spam<enter>" "go to spam"
