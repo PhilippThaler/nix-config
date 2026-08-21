@@ -11,7 +11,10 @@
   # boot.loader.grub.device = "/dev/sda";
   # boot.loader.grub.useOSProber = true;
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 10;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  boot.kernelParams = [ "psmouse.synaptics_intertouch=0" ]; # touchpad: flaky RMI4/SMBus probe kills the PS/2 pointer device
 
   boot.initrd.systemd.enable = true;
   boot.resumeDevice = "/dev/mapper/luks-24967593-22f2-49cd-8aee-1d03c77a9c05";
@@ -116,9 +119,27 @@
     enable = true;
     extraPackages = with pkgs; [ intel-vaapi-driver intel-media-driver ]; # Kaby Lake (X1 Carbon 5th): iHD for full HEVC decode
   };
-  services.upower.enable = true;
   services.thermald.enable = true;
   services.udev.packages = [ pkgs.brightnessctl ];
+  services.auto-cpufreq = {
+    enable = true;
+    settings = {
+      battery = {
+        governor = "powersave";
+        turbo = "auto";
+      };
+      charger = {
+        governor = "performance";
+        turbo = "auto";
+      };
+    };
+  };
+  services.upower = {
+    enable = true;
+    usePercentageForPolicy = true;
+    percentageAction = 5;
+    criticalPowerAction = "Hibernate";
+  };
 
   # ── Services ──────────────────────────────────────────────────────
   services.gvfs.enable = true;
