@@ -1,0 +1,106 @@
+{
+  pkgs,
+  scrolly,
+}:
+with pkgs; [
+  # Wayland / Sway
+  kitty
+  waybar
+  rofi
+  rofimoji
+  swaynotificationcenter
+  swayidle
+  swaylock-effects
+  swaybg
+  gammastep
+  autotiling
+  brightnessctl
+  playerctl
+  grim
+  slurp
+  wf-recorder
+  wl-clipboard
+  cliphist
+  libnotify
+  networkmanagerapplet
+  pavucontrol
+  pcmanfm
+  wdisplays
+  wtype
+  jq
+  mate-polkit
+  pulseaudio
+  pipewire
+  wireplumber
+  kdePackages.kdeconnect-kde # kdeconnect-indicator (sway autostart)
+  scrolly
+
+  # Shell / CLI
+  lsd
+  bat
+  ripgrep
+  fd
+  keychain
+  yazi
+  tree-sitter
+  highlight
+  atool
+  mediainfo
+  ffmpegthumbnailer
+  poppler-utils
+  w3m
+  btop
+  duf
+  gtrash
+  tree
+  unzip
+  zip
+  unrar
+  p7zip
+  rsync
+  sshfs
+  nmap
+  rtk
+
+  # Dev
+  neovim
+  gcc
+  gnumake
+  go
+  gopls
+  delve
+  python3
+  uv
+  ansible
+  ansible-lint
+  gh
+  cargo
+  git-filter-repo
+  nil
+  alejandra
+  typst
+  pandoc
+  pre-commit
+  docker-compose
+  nodejs_22
+
+  # GUI apps
+  librewolf
+  spotify
+  pi-coding-agent
+  mqtt-explorer
+  tiny-rdm
+  dbeaver-bin
+  libreoffice-fresh
+  gimp
+  mpv
+  imv
+  zathura
+  galculator
+  simple-scan
+  nextcloud-client
+  filezilla
+  inkscape
+  seahorse
+  xarchiver
+]

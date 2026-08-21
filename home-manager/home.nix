@@ -15,114 +15,13 @@ in {
     ./neomutt.nix
   ];
 
-
   home.username = "philipp";
   home.homeDirectory = "/home/philipp";
   home.stateVersion = "26.05";
 
   programs.home-manager.enable = true;
 
-  # ── Packages ──────────────────────────────────────────────────────
-  home.packages = with pkgs; [
-    kitty
-    waybar
-    rofi
-    rofimoji
-    swaynotificationcenter
-    swayidle
-    swaylock-effects
-    swaybg
-    gammastep
-    autotiling
-    brightnessctl
-    playerctl
-    grim
-    slurp
-    wf-recorder
-    wl-clipboard
-    cliphist
-    libnotify
-    networkmanagerapplet
-    pavucontrol
-    pcmanfm
-    wdisplays
-    wtype
-    jq
-    mate-polkit
-    pulseaudio
-    pipewire
-    wireplumber
-    kdePackages.kdeconnect-kde # kdeconnect-indicator (sway autostart)
-    scrolly
-
-    # Shell / CLI
-    lsd
-    bat
-    ripgrep
-    fd
-    keychain
-    yazi
-    tree-sitter
-    highlight
-    atool
-    mediainfo
-    ffmpegthumbnailer
-    poppler-utils
-    w3m
-    btop
-    duf
-    gtrash
-    tree
-    unzip
-    zip
-    unrar
-    p7zip
-    rsync
-    sshfs
-    nmap
-    rtk
-
-    # Dev
-    neovim
-    gcc
-    gnumake
-    go
-    gopls
-    delve
-    python3
-    uv
-    ansible
-    ansible-lint
-    gh
-    cargo
-    git-filter-repo
-    nil
-    alejandra
-    typst
-    pandoc
-    pre-commit
-    docker-compose
-    nodejs_22
-
-    # GUI apps
-    librewolf
-    spotify
-    pi-coding-agent
-    mqtt-explorer
-    tiny-rdm
-    libreoffice-fresh
-    gimp
-    mpv
-    imv
-    zathura
-    galculator
-    simple-scan
-    nextcloud-client
-    filezilla
-    inkscape
-    seahorse
-    xarchiver
-  ];
+  home.packages = import ./packages.nix {inherit pkgs scrolly;};
 
   # ── Environment ───────────────────────────────────────────────────
   home.sessionVariables = {
@@ -229,48 +128,48 @@ in {
         fpath+=("${pkgs.zsh-completions}/share/zsh/site-functions")
       '')
       (lib.mkOrder 1000 ''
-      # Accept autosuggestion with Ctrl+Space
-      bindkey '^ ' autosuggest-accept
-      # History substring search on arrow keys
-      bindkey "$terminfo[kcuu1]" history-substring-search-up
-      bindkey "$terminfo[kcud1]" history-substring-search-down
+        # Accept autosuggestion with Ctrl+Space
+        bindkey '^ ' autosuggest-accept
+        # History substring search on arrow keys
+        bindkey "$terminfo[kcuu1]" history-substring-search-up
+        bindkey "$terminfo[kcud1]" history-substring-search-down
 
-      # powerlevel10k prompt (ported from ~/.zsh/.p10k.zsh)
-      [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
-      eval "$(zoxide init zsh)"
-      eval $(keychain --eval --quiet ~/.ssh/ansible_key)
+        # powerlevel10k prompt (ported from ~/.zsh/.p10k.zsh)
+        [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+        eval "$(zoxide init zsh)"
+        eval $(keychain --eval --quiet ~/.ssh/ansible_key)
 
 
-      # Allow `$ command` (for pasting snippets that include the prompt)
-      function $ { "$@" }
+        # Allow `$ command` (for pasting snippets that include the prompt)
+        function $ { "$@" }
 
-      # Run playbooks from the homelab ansible repo from anywhere
-      ap() {
-          if [ -z "$1" ]; then
-              echo "Error: Please specify a playbook."
-              return 1
-          fi
-          local playbook="$1"
-          shift
-          if [[ -f "$ANSIBLE_BASE_DIR/playbooks/$playbook" ]]; then
-              (cd "$ANSIBLE_BASE_DIR" && ansible-playbook --diff "playbooks/$playbook" "$@")
-          else
-              echo "Error: Playbook not found at $ANSIBLE_BASE_DIR/playbooks/$playbook"
-              return 1
-          fi
-      }
+        # Run playbooks from the homelab ansible repo from anywhere
+        ap() {
+            if [ -z "$1" ]; then
+                echo "Error: Please specify a playbook."
+                return 1
+            fi
+            local playbook="$1"
+            shift
+            if [[ -f "$ANSIBLE_BASE_DIR/playbooks/$playbook" ]]; then
+                (cd "$ANSIBLE_BASE_DIR" && ansible-playbook --diff "playbooks/$playbook" "$@")
+            else
+                echo "Error: Playbook not found at $ANSIBLE_BASE_DIR/playbooks/$playbook"
+                return 1
+            fi
+        }
 
-      _ap_completion() {
-          if [[ -d "$ANSIBLE_BASE_DIR/playbooks" ]]; then
-              local -a files
-              files=( "$ANSIBLE_BASE_DIR"/playbooks/*.y*ml(N:t) )
-              if (( ''${#files} > 0 )); then
-                  compadd -M 'm:{a-zA-Z}={a-zA-Z} l:|=* r:|=*' -a files
-                  return 0
-              fi
-          fi
-      }
-      compdef _ap_completion ap
+        _ap_completion() {
+            if [[ -d "$ANSIBLE_BASE_DIR/playbooks" ]]; then
+                local -a files
+                files=( "$ANSIBLE_BASE_DIR"/playbooks/*.y*ml(N:t) )
+                if (( ''${#files} > 0 )); then
+                    compadd -M 'm:{a-zA-Z}={a-zA-Z} l:|=* r:|=*' -a files
+                    return 0
+                fi
+            fi
+        }
+        compdef _ap_completion ap
       '')
     ];
   };
@@ -359,11 +258,11 @@ in {
       "bin/scrolly".executable = true;
     }
     // lib.mapAttrs' (name: _: {
-          name = "bin/" + name;
-          value = {
-            source = ./dotfiles/bin + "/${name}";
-            executable = true;
-          };
-        })
-      (builtins.readDir ./dotfiles/bin);
+      name = "bin/" + name;
+      value = {
+        source = ./dotfiles/bin + "/${name}";
+        executable = true;
+      };
+    })
+    (builtins.readDir ./dotfiles/bin);
 }
