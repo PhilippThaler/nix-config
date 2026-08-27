@@ -43,6 +43,12 @@
     variant = "deadgraveacute";
   };
 
+  # GUI sessions (greetd → sway) skip shell profiles; without this the NixOS default EDITOR=nano leaks into neomutt
+  environment.variables = {
+    EDITOR = "nvim";
+    VISUAL = "nvim";
+  };
+
   # ── User ──────────────────────────────────────────────────────────
   users.users.philipp = {
     isNormalUser = true;

@@ -24,10 +24,11 @@
       set display_filter = "tac | sed '/\\\[-- Autoview/,+1d' | tac"
       alias me Philipp Thaler <philipp@thaler.fyi>
 
+      set query_command = "echo ''' && notmuch address from:/%s/"
+
       bind pager <up> previous-line
       bind pager <down> next-line
 
-      # mbsync replaces mutt-wizard's mailsync script
       macro index o "<shell-escape>mbsync -a<enter>" "sync all mail"
       macro index O "<shell-escape>mbsync -a<enter>" "sync all mail"
 
@@ -43,7 +44,6 @@
           "<pipe-entry> urlscan<Enter>" \
           "call urlscan to extract URLs out of a message"
 
-      # Spam box (upstream has none); folders are "Inbox"/"Spam", not "INBOX"/"Junk"
       macro index,pager gS "<change-folder>=Spam<enter>" "go to spam"
       macro index,pager MS ";<save-message>=Spam<enter>" "move mail to spam"
       macro index,pager CS ";<copy-message>=Spam<enter>" "copy mail to spam"
@@ -51,8 +51,6 @@
       macro index,pager Mi ";<save-message>=Inbox<enter>" "move mail to inbox"
       macro index,pager Ci ";<copy-message>=Inbox<enter>" "copy mail to inbox"
 
-      # abook + gpg-wks not installed
-      unset query_command
       unmacro index,pager a
       unmacro index \eg
       unmacro index \eh
@@ -106,7 +104,7 @@
     genericName = "Email Client";
     comment = "Terminal email client";
     exec = "kitty -e neomutt";
-    terminal = false; # exec already wraps neomutt in kitty
+    terminal = false;
     categories = [ "Network" "Email" ];
   };
 
