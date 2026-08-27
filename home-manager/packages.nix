@@ -91,7 +91,7 @@ with pkgs; [
   mqtt-explorer
   tiny-rdm
   dbeaver-bin
-  libreoffice-fresh
+  libreoffice-stable
   gimp
   mpv
   imv
