@@ -86,6 +86,7 @@ with pkgs; [
 
   # GUI apps
   librewolf
+  chromium
   spotify
   pi-coding-agent
   mqtt-explorer
