@@ -29,7 +29,6 @@ with pkgs; [
   wtype
   jq
   mate-polkit
-  pulseaudio
   pipewire
   wireplumber
   kdePackages.kdeconnect-kde # kdeconnect-indicator (sway autostart)
