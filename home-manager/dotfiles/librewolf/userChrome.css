@@ -1,0 +1,8 @@
+/* Hide the native tab bar; Tree Style Tabs provides tree in the sidebar */
+#tabbrowser-tabs {
+  visibility: collapse !important;
+}
+
+#tabstrip {
+  margin-bottom: 0 !important;
+}

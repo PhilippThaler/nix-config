@@ -18,4 +18,11 @@
       firenvim
     ];
   };
+
+  home.file = {
+    ".config/librewolf/librewolf/4v0kc0t8.default/chrome/userChrome.css".source = ../dotfiles/librewolf/userChrome.css;
+    ".config/librewolf/librewolf/4v0kc0t8.default/user.js".text = ''
+      user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
+    '';
+  };
 }
