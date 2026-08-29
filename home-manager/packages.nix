@@ -1,6 +1,7 @@
 {
   pkgs,
   scrolly,
+  siggy,
 }:
 with pkgs; [
   # Wayland / Sway
@@ -33,6 +34,8 @@ with pkgs; [
   wireplumber
   kdePackages.kdeconnect-kde # kdeconnect-indicator (sway autostart)
   scrolly
+  siggy
+  signal-cli
 
   # Shell / CLI
   lsd

@@ -5,6 +5,7 @@
   ...
 }: let
   scrolly = pkgs.callPackage ../pkgs/scrolly {};
+  siggy = pkgs.callPackage ../pkgs/siggy {};
 
   # ~/bin helper scripts (auto-discovered from dotfiles/bin)
   waybarScripts = ["bluetooth.sh" "clipboard.sh" "gammastep.sh" "notifications.sh"];
@@ -22,7 +23,7 @@ in {
 
   programs.home-manager.enable = true;
 
-  home.packages = import ./packages.nix {inherit pkgs scrolly;};
+  home.packages = import ./packages.nix {inherit pkgs scrolly siggy;};
 
   # ── Environment ───────────────────────────────────────────────────
   home.sessionVariables = {
@@ -80,6 +81,7 @@ in {
       wbconf = "cd ~/.config/waybar && nvim ~/.config/waybar/config && cd -";
       nixconf = "cd ~/nix-config && nvim && cd -";
       nixrebuild = "sudo nixos-rebuild switch --flake ~/nix-config#nixos";
+      nixupdate = "cd ~/nix-config && nix flake update && nixrebuild && cd - && notify-send 'Nix Update Complete'";
       mutt = "neomutt";
       ranger = "yazi";
     };
