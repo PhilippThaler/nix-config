@@ -13,6 +13,7 @@ in {
     ./nvim.nix
     ./email.nix
     ./neomutt.nix
+    ./ssh.nix
   ];
 
   home.username = "philipp";
