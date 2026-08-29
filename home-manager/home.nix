@@ -11,10 +11,11 @@
   waybarScripts = ["bluetooth.sh" "clipboard.sh" "gammastep.sh" "notifications.sh"];
 in {
   imports = [
-    ./nvim.nix
-    ./email.nix
-    ./neomutt.nix
-    ./ssh.nix
+    ./modules/nvim.nix
+    ./modules/email.nix
+    ./modules/neomutt.nix
+    ./modules/ssh.nix
+    ./modules/librewolf.nix
   ];
 
   home.username = "philipp";

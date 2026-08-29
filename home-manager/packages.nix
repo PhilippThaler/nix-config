@@ -92,7 +92,6 @@ with pkgs; [
   nodejs_22
 
   # GUI apps
-  librewolf
   chromium
   spotify
   pi-coding-agent
