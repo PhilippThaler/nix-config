@@ -63,7 +63,6 @@ in {
       l = "lsd -lah";
       cat = "bat";
       g = "nvim +Neogit +only";
-      ssh = "ssh -Y ";
       cd = "z";
       cdi = "zi";
       sctl = "sudo systemctl";
@@ -128,6 +127,17 @@ in {
         fpath+=("${pkgs.zsh-completions}/share/zsh/site-functions")
       '')
       (lib.mkOrder 1000 ''
+        # Reset terminal after ssh dies
+        ssh() {
+          command ssh -Y "$@"
+          local -i rc=$?
+          if (( rc == 255 )); then
+            printf '\e[?1049l'  # exit alternate screen
+            tput reset
+          fi
+          return $rc
+        }
+
         # Accept autosuggestion with Ctrl+Space
         bindkey '^ ' autosuggest-accept
         # History substring search on arrow keys
