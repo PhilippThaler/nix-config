@@ -1,0 +1,55 @@
+{
+  "__ConfigsMigration__userValuesSameToDefaultAreCleared": true,
+  "animationForce": true,
+  "autoAttachOnNewTabButtonMiddleClick": 0,
+  "autoAttachOnNewTabCommand": 0,
+  "chunkedUserStyleRules0": "LyogU2hvdyB0aXRsZSBvZiB1bnJlYWQgdGFicyB3aXRoIHJlZCBhbmQgaXRhbGljIGZvbnQgKi8KLyoKOnJvb3Quc2lkZWJhciB0YWItaXRlbS51bnJlYWQgLmxhYmVsLWNvbnRlbnQgewogIGNvbG9yOiByZWQgIWltcG9ydGFudDsKICBmb250LXN0eWxlOiBpdGFsaWMgIWltcG9ydGFudDsKfQoqLwoKLyogQWRkIHByaXZhdGUgYnJvd3NpbmcgaW5kaWNhdG9yIHBlciB0YWIgKi8KLyoKOnJvb3Quc2lkZWJhciB0YWItaXRlbS5wcml2YXRlLWJyb3dzaW5nIHRhYi1sYWJlbDpiZWZvcmUgewogIGNvbnRlbnQ6ICLwn5W2IjsKfQoqLw==",
+  "closeParentBehaviorMode": 1,
+  "configsVersion": 35,
+  "enableLinuxBehaviors": true,
+  "labelOverflowStyle": "crop",
+  "notifiedFeaturesVersion": 9,
+  "optionsExpandedGroups": [
+    "group-allConfigs"
+  ],
+  "optionsExpandedSections": [
+    "section-appearance",
+    "section-addons",
+    "section-advanced",
+    "section-drag",
+    "section-treeBehavior",
+    "section-newTab",
+    "section-newTabWithOwner",
+    "section-contextMenu",
+    "section-debug"
+  ],
+  "parentTabOperationBehaviorMode": 1,
+  "showDialogInSidebar": true,
+  "showExpertOptions": true,
+  "sidebarWidthInWindow": {
+    "1": 264
+  },
+  "skipCollapsedTabsForTabSwitchingShortcuts": true,
+  "style": "nova",
+  "syncDevices": {
+    "device-1788007719272-5338": {
+      "id": "device-1788007719272-5338",
+      "name": "Firefox on Linux",
+      "icon": "device-desktop",
+      "timestamp": 1788013009770
+    }
+  },
+  "tabPreviewTooltip": true,
+  "treeDoubleClickBehavior": 1,
+  "userStyleRules": "",
+  "userStyleRules0": "",
+  "userStyleRules1": "",
+  "userStyleRules2": "",
+  "userStyleRules3": "",
+  "userStyleRules4": "",
+  "userStyleRules5": "",
+  "userStyleRules6": "",
+  "userStyleRules7": "",
+  "userStyleRulesFieldHeight": "147px",
+  "warnOnCloseTabsByClosebox": false
+}

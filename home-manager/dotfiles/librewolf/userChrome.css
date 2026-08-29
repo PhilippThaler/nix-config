@@ -6,3 +6,8 @@
 #tabstrip {
   margin-bottom: 0 !important;
 }
+
+/* Kill the leftover CSD button row (window controls are sway's job) */
+#TabsToolbar {
+  visibility: collapse !important;
+}

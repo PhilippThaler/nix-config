@@ -14,13 +14,16 @@
       imagus
       spoof-timezone
       old-reddit-redirect
-      vimium
+      # vimium
+      tridactyl
       firenvim
     ];
   };
 
   home.file = {
     ".config/librewolf/librewolf/4v0kc0t8.default/chrome/userChrome.css".source = ../dotfiles/librewolf/userChrome.css;
+    # TST config snapshot (exported via TST options); re-import in TST options after profile reset
+    ".config/librewolf/librewolf/4v0kc0t8.default/tst-config.json".source = ../dotfiles/librewolf/tst-config.json;
     ".config/librewolf/librewolf/4v0kc0t8.default/user.js".text = ''
       user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
     '';
