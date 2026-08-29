@@ -77,6 +77,11 @@ with pkgs; [
   git-filter-repo
   nil
   alejandra
+  stylua
+  lua-language-server
+  clang-tools
+  rust-analyzer
+  tinymist
   typst
   pandoc
   pre-commit
