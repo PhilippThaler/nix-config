@@ -78,7 +78,7 @@ in {
       nvimconfig = "cd ~/.config/nvim && nvim init.lua && cd -";
       swayconfig = "nvim ~/.config/sway/config";
       wbconf = "cd ~/.config/waybar && nvim ~/.config/waybar/config && cd -";
-      nixconf = "cd ~/nix-config";
+      nixconf = "cd ~/nix-config && nvim && cd -";
       nixrebuild = "sudo nixos-rebuild switch --flake ~/nix-config#nixos";
       mutt = "neomutt";
       ranger = "yazi";
