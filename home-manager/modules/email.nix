@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
   programs.mbsync.enable = true;
   programs.msmtp.enable = true;
 
@@ -11,8 +6,8 @@
   systemd.user.services.mailsync = {
     Unit = {
       Description = "Sync mail (mbsync -a)";
-      After = [ "network-online.target" ];
-      Wants = [ "network-online.target" ];
+      After = ["network-online.target"];
+      Wants = ["network-online.target"];
     };
     Service = {
       Type = "oneshot";
@@ -28,7 +23,7 @@
       OnCalendar = "*:0/3";
       Persistent = true;
     };
-    Install.WantedBy = [ "timers.target" ];
+    Install.WantedBy = ["timers.target"];
   };
 
   programs.password-store.enable = true;
@@ -67,19 +62,19 @@
 
       mbsync = {
         enable = true;
-        patterns = [ "*" ];
+        patterns = ["*"];
         create = "both";
         expunge = "both";
       };
 
       notmuch = {
         enable = true;
-        neomutt.virtualMailboxes = [ ];
+        neomutt.virtualMailboxes = [];
       };
 
       neomutt = {
         enable = true;
-        extraMailboxes = [ "Sent" "Drafts" "Trash" "Archive" "Spam" ];
+        extraMailboxes = ["Sent" "Drafts" "Trash" "Archive" "Spam"];
         extraConfig = ''
           set pgp_sign_as = "FC7404E97136D53E34BB557F3A5D1B1D62B7F9C4"
           set pgp_default_key = "FC7404E97136D53E34BB557F3A5D1B1D62B7F9C4"

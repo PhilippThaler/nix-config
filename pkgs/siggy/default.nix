@@ -1,4 +1,10 @@
-{lib, fetchurl, stdenv, autoPatchelfHook}: stdenv.mkDerivation {
+{
+  lib,
+  fetchurl,
+  stdenv,
+  autoPatchelfHook,
+}:
+stdenv.mkDerivation {
   pname = "siggy";
   version = "1.14.2";
   src = fetchurl {

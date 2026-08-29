@@ -6,9 +6,7 @@
 # - ~/Nextcloud is its own subvolume (home/philipp/Nextcloud) and is therefore
 #   excluded automatically: btrfs snapshots/sends never cross subvolume
 #   boundaries (it is synced to the server by Nextcloud anyway).
-{ ... }:
-
-{
+{...}: {
   services.btrbk.instances.main = {
     onCalendar = "daily";
     settings = {

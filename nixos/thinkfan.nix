@@ -1,9 +1,8 @@
-{ config, pkgs, lib, ... }:
-{
+{pkgs, ...}: {
   # ── ThinkPad fan control (thinkfan) ──────────────────────────────
   # Requires thinkpad_acpi with fan_control=1 (set via modprobe option below).
 
-  environment.systemPackages = [ pkgs.thinkfan ];
+  environment.systemPackages = [pkgs.thinkfan];
 
   environment.etc."thinkfan.yaml".source = ./thinkfan.yaml;
 
@@ -12,8 +11,8 @@
 
   systemd.services.thinkfan = {
     description = "ThinkPad fan control daemon (thinkfan)";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "systemd-modules-load.service" ];
+    wantedBy = ["multi-user.target"];
+    after = ["systemd-modules-load.service"];
     serviceConfig = {
       Type = "simple";
       ExecStart = "${pkgs.thinkfan}/bin/thinkfan -n -c /etc/thinkfan.yaml";

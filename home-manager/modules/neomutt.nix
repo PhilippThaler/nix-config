@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   home.packages = [
     pkgs.lynx
     pkgs.notmuch
@@ -105,15 +102,14 @@
     comment = "Terminal email client";
     exec = "kitty -e neomutt";
     terminal = false;
-    categories = [ "Network" "Email" ];
+    categories = ["Network" "Email"];
   };
 
   # mutt-wizard's default muttrc, pinned to a commit so it can't drift.
-  home.file.".config/neomutt/mutt-wizard.muttrc".source =
-    builtins.fetchurl {
-      url = "https://raw.githubusercontent.com/LukeSmithxyz/mutt-wizard/b4a28b2548e94c167bb74fcb5e8c44c34d2be842/share/mutt-wizard.muttrc";
-      sha256 = "sha256-Il3HWitdnwq5xoXS5pE8+Ve6iuXMaY/qNtrWwN7K8f0=";
-    };
+  home.file.".config/neomutt/mutt-wizard.muttrc".source = builtins.fetchurl {
+    url = "https://raw.githubusercontent.com/LukeSmithxyz/mutt-wizard/b4a28b2548e94c167bb74fcb5e8c44c34d2be842/share/mutt-wizard.muttrc";
+    sha256 = "sha256-Il3HWitdnwq5xoXS5pE8+Ve6iuXMaY/qNtrWwN7K8f0=";
+  };
 
   home.file.".config/mutt/mailcap".text = ''
     text/plain; $EDITOR %s ;
