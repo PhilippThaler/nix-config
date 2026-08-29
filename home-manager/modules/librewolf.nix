@@ -1,13 +1,21 @@
-{
-  ...
-}: {
-  # LibreWolf with Tree Style Tabs (installed via enterprise policy,
-  # same mechanism LibreWolf itself uses for its bundled uBlock Origin)
+{pkgs, ...}: {
   programs.librewolf = {
     enable = true;
-    policies.ExtensionSettings."treestyletab@piro.sakura.ne.jp" = {
-      installation_mode = "normal_installed";
-      install_url = "https://addons.mozilla.org/firefox/downloads/latest/treestyletab/latest.xpi";
-    };
+    globalExtensions = with pkgs.nur.repos.rycee.firefox-addons; [
+      ublock-origin
+      tree-style-tab
+      darkreader
+      istilldontcareaboutcookies
+      bitwarden
+      facebook-container
+      enhancer-for-youtube
+      reduxdevtools
+      reddit-enhancement-suite
+      imagus
+      spoof-timezone
+      old-reddit-redirect
+      vimium
+      firenvim
+    ];
   };
 }

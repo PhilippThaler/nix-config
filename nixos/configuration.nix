@@ -1,5 +1,13 @@
-{ config, pkgs, lib, ... }:
 {
+  pkgs,
+  inputs,
+  ...
+}: {
+  # NUR provides nur.repos.rycee.firefox-addons for pkgs.nur lookups
+  nixpkgs.overlays = [
+    inputs.nur.overlays.default
+  ];
+
   imports = [
     ./hardware-configuration.nix
     ./thinkfan.nix
@@ -14,7 +22,7 @@
   boot.loader.systemd-boot.configurationLimit = 10;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.kernelParams = [ "psmouse.synaptics_intertouch=0" ]; # touchpad: flaky RMI4/SMBus probe kills the PS/2 pointer device
+  boot.kernelParams = ["psmouse.synaptics_intertouch=0"]; # touchpad: flaky RMI4/SMBus probe kills the PS/2 pointer device
 
   boot.initrd.systemd.enable = true;
   boot.resumeDevice = "/dev/mapper/luks-24967593-22f2-49cd-8aee-1d03c77a9c05";
@@ -53,7 +61,7 @@
   users.users.philipp = {
     isNormalUser = true;
     description = "philipp";
-    extraGroups = [ "networkmanager" "wheel" "video" "input" "docker" ];
+    extraGroups = ["networkmanager" "wheel" "video" "input" "docker"];
     shell = pkgs.zsh;
   };
 
@@ -62,7 +70,7 @@
 
   # ── Nix ───────────────────────────────────────────────────────────
   nixpkgs.config.allowUnfree = true;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
   nix.settings.auto-optimise-store = true;
   nix.gc = {
     automatic = true;
@@ -79,12 +87,12 @@
     package = pkgs.swayfx;
     wrapperFeatures.gtk = true;
   };
-  security.pam.services.swaylock = { };
+  security.pam.services.swaylock = {};
 
   xdg.portal = {
     enable = true;
     wlr.enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    extraPortals = [pkgs.xdg-desktop-portal-gtk];
   };
 
   # Login greeter (starts sway)
@@ -123,10 +131,10 @@
   # GPU drivers (not enabled by default without xserver!) — required for sway
   hardware.graphics = {
     enable = true;
-    extraPackages = with pkgs; [ intel-vaapi-driver intel-media-driver ]; # Kaby Lake (X1 Carbon 5th): iHD for full HEVC decode
+    extraPackages = with pkgs; [intel-vaapi-driver intel-media-driver]; # Kaby Lake (X1 Carbon 5th): iHD for full HEVC decode
   };
   services.thermald.enable = true;
-  services.udev.packages = [ pkgs.brightnessctl ];
+  services.udev.packages = [pkgs.brightnessctl];
   services.auto-cpufreq = {
     enable = true;
     settings = {
