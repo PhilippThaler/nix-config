@@ -10,13 +10,15 @@
   # ~/bin helper scripts (auto-discovered from dotfiles/bin)
   waybarScripts = ["bluetooth.sh" "clipboard.sh" "gammastep.sh" "notifications.sh"];
 in {
-  imports = [
-    ./modules/nvim.nix
-    ./modules/email.nix
-    ./modules/neomutt.nix
-    ./modules/ssh.nix
-    ./modules/librewolf.nix
-  ];
+  # Auto-import all .nix files from modules
+  imports =
+    builtins.map
+    (name: ./modules/${name})
+    (builtins.sort (a: b: a < b) (
+      builtins.attrNames (
+        lib.filterAttrs (name: type: type == "regular" && lib.hasSuffix ".nix" name) (builtins.readDir ./modules)
+      )
+    ));
 
   home.username = "philipp";
   home.homeDirectory = "/home/philipp";
