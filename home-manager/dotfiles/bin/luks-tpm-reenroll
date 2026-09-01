@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Re-seal LUKS TPM tokens to the current PCR 7 (needed after Secure Boot dbx/firmware updates)
+set -euo pipefail
+
+echo "Re-enrolling TPM tokens (PCR 7) for root + swap LUKS volumes..."
+echo "You will be asked for the LUKS passphrase once per volume."
+sudo systemd-cryptenroll --wipe-slot=tpm2 --tpm2-device=auto --tpm2-pcrs=7 /dev/nvme0n1p2
+sudo systemd-cryptenroll --wipe-slot=tpm2 --tpm2-device=auto --tpm2-pcrs=7 /dev/nvme0n1p1
+echo "Done. Next boot should unlock via TPM again."
