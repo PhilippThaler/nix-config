@@ -6,6 +6,7 @@
 }: let
   scrolly = pkgs.callPackage ../pkgs/scrolly {};
   siggy = pkgs.callPackage ../pkgs/siggy {};
+  cymbal = pkgs.callPackage ../pkgs/cymbal {};
 
   # ~/bin helper scripts (auto-discovered from dotfiles/bin)
   waybarScripts = ["bluetooth.sh" "clipboard.sh" "gammastep.sh" "notifications.sh"];
@@ -26,7 +27,7 @@ in {
 
   programs.home-manager.enable = true;
 
-  home.packages = import ./packages.nix {inherit pkgs scrolly siggy;};
+  home.packages = import ./packages.nix {inherit pkgs scrolly siggy cymbal;};
 
   # ── Environment ───────────────────────────────────────────────────
   home.sessionVariables = {
@@ -38,7 +39,6 @@ in {
     ELECTRON_OZONE_PLATFORM_HINT = "wayland";
     ANSIBLE_BASE_DIR = "$HOME/Projects/homelab-ansible";
     GOPATH = "$HOME/go";
-    PI_CODING_AGENT_DIR = "$HOME/.config/pi";
   };
 
   home.sessionPath = [
@@ -85,7 +85,7 @@ in {
       wbconf = "cd ~/.config/waybar && nvim ~/.config/waybar/config && cd -";
       nixconf = "cd ~/nix-config && nvim && cd -";
       nixrebuild = "sudo nixos-rebuild switch --flake ~/nix-config#nixos";
-      nixupdate = "cd ~/nix-config && nix flake update && nixrebuild && cd - && notify-send 'Nix Update Complete'";
+      nixupdate = "cd ~/nix-config && update-releases && nix flake update && nixrebuild && cd - && notify-send 'Nix Update Complete'";
       mutt = "neomutt";
       ranger = "yazi";
     };

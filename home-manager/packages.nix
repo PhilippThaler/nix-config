@@ -2,6 +2,7 @@
   pkgs,
   scrolly,
   siggy,
+  cymbal,
 }:
 with pkgs; [
   # Wayland / Sway
@@ -63,6 +64,9 @@ with pkgs; [
   sshfs
   nmap
   rtk
+  cymbal
+  ffmpeg
+  yt-dlp
 
   # Dev
   neovim
@@ -94,7 +98,6 @@ with pkgs; [
   # GUI apps
   chromium
   spotify
-  pi-coding-agent
   mqtt-explorer
   tiny-rdm
   dbeaver-bin
