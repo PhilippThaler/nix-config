@@ -25,6 +25,7 @@
   boot.kernelParams = ["psmouse.synaptics_intertouch=0"]; # touchpad: flaky RMI4/SMBus probe kills the PS/2 pointer device
 
   boot.initrd.systemd.enable = true;
+  boot.initrd.systemd.tpm2.enable = true;
   boot.resumeDevice = "/dev/mapper/luks-24967593-22f2-49cd-8aee-1d03c77a9c05";
 
   # ── Networking ────────────────────────────────────────────────────
