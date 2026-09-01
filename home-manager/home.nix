@@ -255,8 +255,6 @@ in {
       "swaylock/config".source = ./dotfiles/swaylock/config;
       "gammastep/config.ini".source = ./dotfiles/gammastep/config.ini;
       "mimeapps.list".source = ./dotfiles/mimeapps.list;
-
-      "yazi/keymap.toml".source = ./dotfiles/yazi/keymap.toml;
     }
     // builtins.listToAttrs (map (name: {
         name = "waybar/scripts/${name}";

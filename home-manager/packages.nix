@@ -44,7 +44,6 @@ with pkgs; [
   ripgrep
   fd
   keychain
-  yazi
   tree-sitter
   highlight
   atool
