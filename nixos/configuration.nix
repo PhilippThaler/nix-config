@@ -4,7 +4,6 @@
   inputs,
   ...
 }: {
-  # NUR provides nur.repos.rycee.firefox-addons for pkgs.nur lookups
   nixpkgs.overlays = [
     inputs.nur.overlays.default
   ];
@@ -16,10 +15,6 @@
   ];
 
   # ── Boot ──────────────────────────────────────────────────────────
-  # boot.loader.grub.enable = true;
-  # boot.loader.grub.device = "/dev/sda";
-  # boot.loader.grub.useOSProber = true;
-  # lanzaboote (Secure Boot) replaces the stock systemd-boot module
   boot.loader.systemd-boot.enable = lib.mkForce false;
   boot.loader.systemd-boot.configurationLimit = 10;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -59,7 +54,6 @@
     variant = "deadgraveacute";
   };
 
-  # GUI sessions (greetd → sway) skip shell profiles; without this the NixOS default EDITOR=nano leaks into neomutt
   environment.variables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
@@ -73,7 +67,6 @@
     shell = pkgs.zsh;
   };
 
-  # Passwordless sudo for wheel (declarative replacement for sudoers.d hacks)
   security.sudo.wheelNeedsPassword = false;
 
   # ── Nix ───────────────────────────────────────────────────────────
