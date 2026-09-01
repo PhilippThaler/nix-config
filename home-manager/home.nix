@@ -73,7 +73,8 @@ in {
       sctl = "sudo systemctl";
       reboot = "systemctl reboot";
       ansible-playbook = "ansible-playbook --diff";
-      rm = "echo -e 'If you want to use rm really, then use \"tp\" or \"rmd\" instead.'; false";
+      rm = "gtrash put";
+      restore = "gtrash r";
       rmd = "command rm";
       tp = "gtrash put";
 
