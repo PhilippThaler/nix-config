@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   inputs,
   ...
 }: {
@@ -18,9 +19,15 @@
   # boot.loader.grub.enable = true;
   # boot.loader.grub.device = "/dev/sda";
   # boot.loader.grub.useOSProber = true;
-  boot.loader.systemd-boot.enable = true;
+  # lanzaboote (Secure Boot) replaces the stock systemd-boot module
+  boot.loader.systemd-boot.enable = lib.mkForce false;
   boot.loader.systemd-boot.configurationLimit = 10;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.lanzaboote = {
+    enable = true;
+    pkiBundle = "/var/lib/sbctl";
+    sortKey = "lanza";
+  };
 
   boot.kernelParams = ["psmouse.synaptics_intertouch=0"]; # touchpad: flaky RMI4/SMBus probe kills the PS/2 pointer device
 
@@ -191,6 +198,7 @@
     psmisc
     procps
     file
+    sbctl
   ];
 
   # This value determines the NixOS release from which the default
