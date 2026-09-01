@@ -165,6 +165,7 @@
 
   # ── Services ──────────────────────────────────────────────────────
   services.gvfs.enable = true;
+  services.fwupd.enable = true;
   services.openssh.enable = true;
   security.polkit.enable = true;
   programs.dconf.enable = true;
