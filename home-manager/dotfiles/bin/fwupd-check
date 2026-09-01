@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Check LVFS for firmware updates and notify via swaync
+set -euo pipefail
+
+fwupdmgr refresh >/dev/null 2>&1 || true
+
+OUTPUT=$(fwupdmgr get-updates 2>/dev/null || true)
+
+if [ -z "$OUTPUT" ] || grep -qi "no updates" <<<"$OUTPUT"; then
+  exit 0
+fi
+
+DEVICES=$(grep -E "Dev:" <<<"$OUTPUT" | sed -E 's/.*Dev: //' | paste -sd, - || true)
+
+BODY="For: ${DEVICES:-system firmware}
+Run: fwupdmgr update"
+
+notify-send -a fwupd -u normal "Firmware updates available" "$BODY"

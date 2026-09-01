@@ -161,6 +161,14 @@
   services.fwupd.enable = true;
   services.openssh.enable = true;
   security.polkit.enable = true;
+  # let the fwupd-check user timer refresh LVFS metadata without an interactive prompt
+  security.polkit.extraConfig = ''
+    polkit.addRule(function(action, subject) {
+      if (subject.user == "philipp" && action.id == "org.freedesktop.fwupd.refresh-remote") {
+        return polkit.Result.YES;
+      }
+    });
+  '';
   programs.dconf.enable = true;
   services.gnome.gnome-keyring.enable = true;
   programs.kdeconnect.enable = true;
