@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# Bump release-pinned packages in ~/nix-config to their latest GitHub release.
+# To add a package: name, GitHub repo, fetch fn (fetchurl/fetchzip), asset template.
+set -euo pipefail
+
+nixcfg="${NIX_CONFIG:-$HOME/nix-config}"
+updated=0
+
+update_pkg() {
+  local name=$1 repo=$2 fetch=$3 asset=$4
+  local nixfile="$nixcfg/pkgs/$name/default.nix"
+  local old new url b32 sri
+
+  old="$(grep -oP 'version = "\K[^"]+' "$nixfile")"
+  new="$(curl -sf "https://api.github.com/repos/$repo/releases/latest" \
+    | python3 -c 'import json,sys; print(json.load(sys.stdin)["tag_name"].lstrip("v"))')"
+
+  if [ "$old" = "$new" ]; then
+    echo "$name: up to date ($old)"
+    return 0
+  fi
+
+  url="https://github.com/$repo/releases/download/v$new/${asset/VERSION/$new}"
+  # fetchzip hashes the unpacked tree, fetchurl the archive itself
+  if [ "$fetch" = fetchzip ]; then
+    b32="$(nix-prefetch-url --unpack "$url" 2>/dev/null)"
+  else
+    b32="$(nix-prefetch-url "$url" 2>/dev/null)"
+  fi
+  sri="$(nix hash convert --hash-algo sha256 --to sri "$b32")"
+
+  sed -i \
+    -e "s/$old/$new/g" \
+    -e "s#hash = \"sha256-[^\"]*\"#hash = \"$sri\"#" \
+    -e "s#sha256 = \"sha256-[^\"]*\"#sha256 = \"$sri\"#" \
+    "$nixfile"
+
+  echo "$name: $old → $new"
+  updated=1
+}
+
+update_pkg cymbal 1broseidon/cymbal fetchzip 'cymbal_vVERSION_linux_x86_64.tar.gz'
+update_pkg siggy johnsideserf/siggy fetchurl 'siggy-vVERSION-x86_64-unknown-linux-gnu.tar.gz'
+
+[ "$updated" = 1 ] && git -C "$nixcfg" add pkgs
+exit 0
