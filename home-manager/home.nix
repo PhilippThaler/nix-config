@@ -248,6 +248,7 @@ in {
       "image/*" = "imv.desktop";
       "text/*" = "nvim.desktop";
       "inode/directory" = "yazi.desktop";
+      "x-scheme-handler/mailto" = "neomutt.desktop";
       "x-scheme-handler/http" = "librewolf.desktop";
       "x-scheme-handler/https" = "librewolf.desktop";
       "x-scheme-handler/ftp" = "librewolf.desktop";

@@ -1,8 +1,11 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  mailto = pkgs.writeShellScriptBin "mailto" (builtins.readFile ./mailto.sh);
+in {
   home.packages = [
     pkgs.lynx
     pkgs.notmuch
     pkgs.urlscan
+    mailto
   ];
 
   programs.notmuch.enable = true;
@@ -100,9 +103,10 @@
     name = "NeoMutt";
     genericName = "Email Client";
     comment = "Terminal email client";
-    exec = "kitty -e neomutt";
+    exec = "kitty -e ${mailto}/bin/mailto %u";
     terminal = false;
     categories = ["Network" "Email"];
+    mimeType = ["x-scheme-handler/mailto"];
   };
 
   # mutt-wizard's default muttrc, pinned to a commit so it can't drift.
