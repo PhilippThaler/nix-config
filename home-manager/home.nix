@@ -236,9 +236,25 @@ in {
 
   # ── Dotfiles ──────────────────────────────────────────────────────
   xdg.configFile = {
-
     "gammastep/config.ini".source = ./dotfiles/gammastep/config.ini;
-    "mimeapps.list".source = ./dotfiles/mimeapps.list;
+  };
+
+  xdg.mimeApps.defaultApplications = {
+    "application/pdf" = "zathura.desktop";
+    "image/*" = "imv.desktop";
+    "text/*" = "nvim.desktop";
+    "inode/directory" = "yazi.desktop";
+    "x-scheme-handler/http" = "librewolf.desktop";
+    "x-scheme-handler/https" = "librewolf.desktop";
+    "x-scheme-handler/ftp" = "librewolf.desktop";
+    "x-scheme-handler/chrome" = "librewolf.desktop";
+    "text/html" = "librewolf.desktop";
+    "application/x-extension-htm" = "librewolf.desktop";
+    "application/x-extension-html" = "librewolf.desktop";
+    "application/x-extension-shtml" = "librewolf.desktop";
+    "application/xhtml+xml" = "librewolf.desktop";
+    "application/x-extension-xhtml" = "librewolf.desktop";
+    "application/x-extension-xht" = "librewolf.desktop";
   };
 
   home.file =
