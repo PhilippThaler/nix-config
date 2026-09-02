@@ -12,7 +12,6 @@ with pkgs; [
   rofimoji
   swaynotificationcenter
   swayidle
-  swaylock-effects
   swaybg
   gammastep
   autotiling

@@ -249,7 +249,6 @@ in {
       "kitty/kitty.conf".source = ./dotfiles/kitty/kitty.conf;
       "kitty/current-theme.conf".source = ./dotfiles/kitty/current-theme.conf;
 
-      "swaylock/config".source = ./dotfiles/swaylock/config;
       "gammastep/config.ini".source = ./dotfiles/gammastep/config.ini;
       "mimeapps.list".source = ./dotfiles/mimeapps.list;
     }
