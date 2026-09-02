@@ -15,7 +15,7 @@
     settings = {
       lastChangelogVersion = "0.84.2";
       defaultProvider = "opencode-go";
-      defaultModel = "deepseek-v4-flash";
+      defaultModel = "deepseek-v4-flash-vision-exp";
       defaultThinkingLevel = "high";
       enabledModels = [
         "opencode-go/deepseek-v4-flash"
