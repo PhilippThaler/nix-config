@@ -238,9 +238,6 @@ in {
     # sway config with store-path substitution for the polkit agent
     "sway/config".text = builtins.replaceStrings ["@POLKIT_AGENT@"] ["${pkgs.mate-polkit}/libexec/polkit-mate-authentication-agent-1"] (builtins.readFile ./dotfiles/sway/config);
 
-    "kitty/kitty.conf".source = ./dotfiles/kitty/kitty.conf;
-    "kitty/current-theme.conf".source = ./dotfiles/kitty/current-theme.conf;
-
     "gammastep/config.ini".source = ./dotfiles/gammastep/config.ini;
     "mimeapps.list".source = ./dotfiles/mimeapps.list;
   };
