@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-# swayidle daemon with dim → lock → suspend chain
-
-swayidle -w \
-    timeout 600 "brightnessctl -s set 10%" \
-        resume "brightnessctl -r" \
-    timeout 610 "swaylock -f" \
-    timeout 1510 "systemctl suspend"

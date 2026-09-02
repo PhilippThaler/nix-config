@@ -8,8 +8,6 @@ with pkgs; [
   # Wayland / Sway
   kitty
   rofimoji
-  swaynotificationcenter
-  swayidle
   swaybg
   gammastep
   autotiling

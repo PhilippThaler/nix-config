@@ -3,6 +3,7 @@
   lib,
   ...
 }: {
+  services.swaync.enable = true;
   wayland.windowManager.sway = {
     enable = true;
     package = pkgs.swayfx;
@@ -82,7 +83,6 @@
         {command = "nextcloud";}
         {command = "kdeconnectd";}
         {command = "sh -c 'sleep 2 && kdeconnect-indicator'";}
-        {command = "swaync";}
         {command = "gammastep -m wayland -c $HOME/.config/gammastep/config.ini";}
         {command = "kitty --class siggy siggy";}
         {command = "kitty --class neomutt neomutt";}
@@ -90,10 +90,6 @@
         {command = "autotiling -l 2";}
         {
           command = "sh -c 'pkill -f \"bash /home/philipp/bin/[b]attery-warn\"; exec /home/philipp/bin/battery-warn'";
-          always = true;
-        }
-        {
-          command = "sh -c 'pkill swayidle; exec /home/philipp/bin/swayidle-daemon'";
           always = true;
         }
         {
