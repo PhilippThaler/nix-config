@@ -26,9 +26,9 @@
   '';
 in {
   home.file = {
-    ".config/librewolf/librewolf/4v0kc0t8.default/chrome/userChrome.css".source = ../dotfiles/librewolf/userChrome.css;
+    ".config/librewolf/librewolf/4v0kc0t8.default/chrome/userChrome.css".source = ./userChrome.css;
     # TST config snapshot (exported via TST options); re-import in TST options after profile reset
-    ".config/librewolf/librewolf/4v0kc0t8.default/tst-config.json".source = ../dotfiles/librewolf/tst-config.json;
+    ".config/librewolf/librewolf/4v0kc0t8.default/tst-config.json".source = ./tst-config.json;
     ".librewolf/native-messaging-hosts/firenvim.json".text = builtins.toJSON {
       name = "firenvim";
       description = "Turn your browser into a Neovim GUI.";
