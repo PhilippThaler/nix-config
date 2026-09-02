@@ -45,6 +45,12 @@ in {
     "$HOME/.npm-global/bin"
   ];
 
+  manual = {
+    html.enable = true;
+    json.enable = true;
+    manpages.enable = true;
+  };
+
   # ── zoxide / fzf (zsh-integration is set up in modules/zsh.nix) ──
   programs.zoxide = {
     enable = true;
