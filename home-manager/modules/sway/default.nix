@@ -3,7 +3,6 @@
   lib,
   ...
 }: {
-  services.swaync.enable = true;
   wayland.windowManager.sway = {
     enable = true;
     package = pkgs.swayfx;
@@ -78,19 +77,9 @@
       workspaceAutoBackAndForth = true;
 
       startup = [
-        {command = "${pkgs.mate-polkit}/libexec/polkit-mate-authentication-agent-1";}
-        {command = "nm-applet";}
-        {command = "nextcloud";}
-        {command = "kdeconnectd";}
-        {command = "sh -c 'sleep 2 && kdeconnect-indicator'";}
         {command = "kitty --class siggy siggy";}
         {command = "kitty --class neomutt neomutt";}
         {command = "sh -c 'sleep 2; swaymsg [workspace=4] layout stacking'";}
-        {command = "autotiling -l 2";}
-        {
-          command = "sh -c 'pkill -f \"bash /home/philipp/bin/[b]attery-warn\"; exec /home/philipp/bin/battery-warn'";
-          always = true;
-        }
         {
           command = "sh -c 'pkill waybar; waybar'";
           always = true;

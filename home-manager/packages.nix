@@ -49,6 +49,7 @@ with pkgs; [
   poppler-utils
   w3m
   btop
+  tldr
   duf
   gtrash
   tree
