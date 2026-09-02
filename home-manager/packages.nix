@@ -7,8 +7,6 @@
 with pkgs; [
   # Wayland / Sway
   kitty
-  waybar
-  rofi
   rofimoji
   swaynotificationcenter
   swayidle

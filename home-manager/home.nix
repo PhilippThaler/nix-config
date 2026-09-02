@@ -7,19 +7,15 @@
   scrolly = pkgs.callPackage ../pkgs/scrolly {};
   siggy = pkgs.callPackage ../pkgs/siggy {};
   cymbal = pkgs.callPackage ../pkgs/cymbal {};
-
-  # ~/bin helper scripts (auto-discovered from dotfiles/bin)
-  waybarScripts = ["bluetooth.sh" "clipboard.sh" "gammastep.sh" "notifications.sh"];
 in {
-  # Auto-import all .nix files from modules
-  imports =
-    builtins.map
-    (name: ./modules/${name})
-    (builtins.sort (a: b: a < b) (
-      builtins.attrNames (
-        lib.filterAttrs (name: type: type == "regular" && lib.hasSuffix ".nix" name) (builtins.readDir ./modules)
-      )
-    ));
+  # Auto-import modules: a flat foo.nix is used directly, a foo/ dir uses foo/default.nix
+  imports = builtins.map (m:
+    let
+      s = builtins.readDir ./modules;
+      t = s.${m};
+    in
+      if t == "directory" then ./modules/${m}/default.nix else ./modules/${m}
+    ) (builtins.sort (a: b: a < b) (builtins.attrNames (lib.filterAttrs (n: t: t == "regular" && lib.hasSuffix ".nix" n || t == "directory") (builtins.readDir ./modules))));
 
   home.username = "philipp";
   home.homeDirectory = "/home/philipp";
@@ -238,28 +234,16 @@ in {
   };
 
   # ── Dotfiles ──────────────────────────────────────────────────────
-  xdg.configFile =
-    {
-      # sway config with store-path substitution for the polkit agent
-      "sway/config".text = builtins.replaceStrings ["@POLKIT_AGENT@"] ["${pkgs.mate-polkit}/libexec/polkit-mate-authentication-agent-1"] (builtins.readFile ./dotfiles/sway/config);
+  xdg.configFile = {
+    # sway config with store-path substitution for the polkit agent
+    "sway/config".text = builtins.replaceStrings ["@POLKIT_AGENT@"] ["${pkgs.mate-polkit}/libexec/polkit-mate-authentication-agent-1"] (builtins.readFile ./dotfiles/sway/config);
 
-      "waybar/config".source = ./dotfiles/waybar/config;
-      "waybar/style.css".source = ./dotfiles/waybar/style.css;
+    "kitty/kitty.conf".source = ./dotfiles/kitty/kitty.conf;
+    "kitty/current-theme.conf".source = ./dotfiles/kitty/current-theme.conf;
 
-      "kitty/kitty.conf".source = ./dotfiles/kitty/kitty.conf;
-      "kitty/current-theme.conf".source = ./dotfiles/kitty/current-theme.conf;
-
-      "gammastep/config.ini".source = ./dotfiles/gammastep/config.ini;
-      "mimeapps.list".source = ./dotfiles/mimeapps.list;
-    }
-    // builtins.listToAttrs (map (name: {
-        name = "waybar/scripts/${name}";
-        value = {
-          source = ./dotfiles/waybar/scripts + "/${name}";
-          executable = true;
-        };
-      })
-      waybarScripts);
+    "gammastep/config.ini".source = ./dotfiles/gammastep/config.ini;
+    "mimeapps.list".source = ./dotfiles/mimeapps.list;
+  };
 
   home.file =
     {
