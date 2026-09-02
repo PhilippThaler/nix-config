@@ -6,10 +6,10 @@
 }:
 stdenv.mkDerivation {
   pname = "siggy";
-  version = "1.14.3";
+  version = "1.15.0";
   src = fetchurl {
-    url = "https://github.com/johnsideserf/siggy/releases/download/v1.14.3/siggy-v1.14.3-x86_64-unknown-linux-gnu.tar.gz";
-    sha256 = "sha256-QsmL1hO+mnDFz9P2q11e/qCq6rSbvwwDXasAmFZOt1I=";
+    url = "https://github.com/johnsideserf/siggy/releases/download/v1.15.0/siggy-v1.15.0-x86_64-unknown-linux-gnu.tar.gz";
+    sha256 = "sha256-WG01x7205xvqVJJ9xafgWneTCTxHS9yQNuhrC5QT/H4=";
   };
   sourceRoot = ".";
   nativeBuildInputs = [autoPatchelfHook];
