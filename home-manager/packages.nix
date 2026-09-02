@@ -34,6 +34,8 @@ with pkgs; [
   scrolly
   siggy
   signal-cli
+  xdg-terminal-exec
+  glib.bin
 
   # Shell / CLI
   lsd
