@@ -267,9 +267,9 @@ in {
     // lib.mapAttrs' (name: _: {
       name = "bin/" + name;
       value = {
-        source = ./dotfiles/bin + "/${name}";
+        source = ./bin + "/${name}";
         executable = true;
       };
     })
-    (builtins.readDir ./dotfiles/bin);
+    (builtins.readDir ./bin);
 }
