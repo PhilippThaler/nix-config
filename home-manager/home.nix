@@ -84,7 +84,7 @@ in {
       swayconfig = "nvim ~/.config/sway/config";
       wbconf = "cd ~/.config/waybar && nvim ~/.config/waybar/config && cd -";
       nixconf = "cd ~/nix-config && nvim && cd -";
-      nixrebuild = "sudo nixos-rebuild switch --flake ~/nix-config#nixos";
+      nixrebuild = "cd ~/nix-config && git add . && sudo nixos-rebuild switch --flake ~/nix-config#nixos && cd -";
       nixupdate = "cd ~/nix-config && update-releases && nix flake update && nixrebuild && cd - && notify-send 'Nix Update Complete'";
       mutt = "neomutt";
       ranger = "yazi";
@@ -248,9 +248,6 @@ in {
 
       "kitty/kitty.conf".source = ./dotfiles/kitty/kitty.conf;
       "kitty/current-theme.conf".source = ./dotfiles/kitty/current-theme.conf;
-
-      "rofi".source = ./dotfiles/rofi;
-      "rofi".recursive = true;
 
       "swaylock/config".source = ./dotfiles/swaylock/config;
       "gammastep/config.ini".source = ./dotfiles/gammastep/config.ini;
