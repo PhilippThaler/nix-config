@@ -6,18 +6,6 @@
 
   xdg.configFile = {
     "xdg-terminals.list".text = "kitty.desktop\n";
-    "gammastep/config.ini".text = ''
-      ; Gammastep config
-      [general]
-      temp-day=5000
-      temp-night=3200
-      fade=1
-      location-provider=manual
-
-      [manual]
-      lat=48.21
-      lon=16.37
-    '';
   };
 
   xdg.mimeApps = {

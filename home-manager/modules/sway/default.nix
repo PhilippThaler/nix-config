@@ -83,7 +83,6 @@
         {command = "nextcloud";}
         {command = "kdeconnectd";}
         {command = "sh -c 'sleep 2 && kdeconnect-indicator'";}
-        {command = "gammastep -m wayland -c $HOME/.config/gammastep/config.ini";}
         {command = "kitty --class siggy siggy";}
         {command = "kitty --class neomutt neomutt";}
         {command = "sh -c 'sleep 2; swaymsg [workspace=4] layout stacking'";}
