@@ -9,20 +9,21 @@
   cymbal = pkgs.callPackage ../pkgs/cymbal {};
 in {
   # Auto-import modules: a flat foo.nix is used directly, a foo/ dir uses foo/default.nix
-  imports = builtins.map (m:
-    let
+  imports = builtins.map (
+    m: let
       s = builtins.readDir ./modules;
       t = s.${m};
     in
-      if t == "directory" then ./modules/${m}/default.nix else ./modules/${m}
-    ) (builtins.sort (a: b: a < b) (builtins.attrNames (lib.filterAttrs (n: t: t == "regular" && lib.hasSuffix ".nix" n || t == "directory") (builtins.readDir ./modules))));
+      if t == "directory"
+      then ./modules/${m}/default.nix
+      else ./modules/${m}
+  ) (builtins.sort (a: b: a < b) (builtins.attrNames (lib.filterAttrs (n: t: t == "regular" && lib.hasSuffix ".nix" n || t == "directory") (builtins.readDir ./modules))));
 
   home.username = "philipp";
   home.homeDirectory = "/home/philipp";
   home.stateVersion = "26.05";
 
   programs.home-manager.enable = true;
-
   home.packages = import ./packages.nix {inherit pkgs scrolly siggy cymbal;};
 
   # ── Environment ───────────────────────────────────────────────────
@@ -235,8 +236,6 @@ in {
 
   # ── Dotfiles ──────────────────────────────────────────────────────
   xdg.configFile = {
-    # sway config with store-path substitution for the polkit agent
-    "sway/config".text = builtins.replaceStrings ["@POLKIT_AGENT@"] ["${pkgs.mate-polkit}/libexec/polkit-mate-authentication-agent-1"] (builtins.readFile ./dotfiles/sway/config);
 
     "gammastep/config.ini".source = ./dotfiles/gammastep/config.ini;
     "mimeapps.list".source = ./dotfiles/mimeapps.list;
