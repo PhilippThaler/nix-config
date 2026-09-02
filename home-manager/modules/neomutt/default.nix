@@ -1,6 +1,8 @@
 {pkgs, ...}: let
   mailto = pkgs.writeShellScriptBin "mailto" (builtins.readFile ./mailto.sh);
 in {
+  imports = [ ./email.nix ];
+
   home.packages = [
     pkgs.lynx
     pkgs.notmuch
