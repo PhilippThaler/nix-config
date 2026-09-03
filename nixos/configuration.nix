@@ -134,7 +134,6 @@
     enable = true;
     extraPackages = with pkgs; [intel-vaapi-driver intel-media-driver]; # Kaby Lake (X1 Carbon 5th): iHD for full HEVC decode
   };
-  services.thermald.enable = true;
   services.udev.packages = [pkgs.brightnessctl];
   services.auto-cpufreq = {
     enable = true;
