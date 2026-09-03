@@ -1,5 +1,5 @@
 sensors:
-  # CPU package + 2 physical cores (i5-4300U, 2C/4T → 3 temps)
+  # CPU package + 2 physical cores (i7-7500U, 2C/4T → 3 temps)
   - hwmon: /sys/devices/platform/coretemp.0/hwmon
     indices: [1, 2, 3]
 
@@ -34,4 +34,3 @@ levels:
   - [5, 70, 75]
   - [6, 75, 80]
   - [7, 80, 32767]
-

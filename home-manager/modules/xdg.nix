@@ -2,6 +2,12 @@
   xdg.userDirs = {
     enable = true;
     createDirectories = true;
+
+    desktop = null;
+    documents = null;
+    music = null;
+    publicShare = null;
+    templates = null;
   };
 
   xdg.configFile = {
