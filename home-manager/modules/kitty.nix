@@ -21,7 +21,7 @@
       tab_bar_align = "end";
       tab_bar_show_new_tab_button = true;
       tab_bar_min_tabs = 2;
-      notify_on_cmd_finish = "invisible 10.0";
+      notify_on_cmd_finish = "never";
 
       wheel_scroll_multiplier = 8.0;
       touch_scroll_multiplier = 8.0;

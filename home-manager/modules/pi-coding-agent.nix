@@ -108,4 +108,25 @@
       ];
     };
   };
+
+  # Notify when pi finishes work — kitty OSC 99 desktop notification on agent_settled.
+  home.file."${config.home.homeDirectory}/.config/pi/extensions/notify-on-settle.ts".text = ''
+    import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+
+    function notifyOSC99(title: string, body: string): void {
+      process.stdout.write("\x1b]99;i=1:d=0;" + title + "\x1b\\");
+      process.stdout.write("\x1b]99;i=1:p=body;" + body + "\x1b\\");
+    }
+
+    export default function (pi: ExtensionAPI) {
+      // agent_settled fires only once nothing is queued to run again.
+      pi.on("agent_settled", async () => {
+        if (process.env.KITTY_WINDOW_ID) {
+          notifyOSC99("Pi", "Ready for input");
+        } else {
+          await pi.exec("notify-send", ["Pi", "Ready for input"]);
+        }
+      });
+    }
+  '';
 }
