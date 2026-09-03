@@ -56,9 +56,6 @@
       };
       theme = "dark";
       hideThinkingBlock = false;
-      "pi-minimal-subagent" = {
-        extensions = [];
-      };
       packages = [
         "npm:@gotgenes/pi-permission-system@20.10.0"
         "npm:pi-web-access@0.13.0"
@@ -70,7 +67,7 @@
         "https://github.com/elpapi42/pi-fork@4a09af4ef5276d68f0d4321d033fa0f3f0ef2954"
         "https://github.com/elpapi42/pi-observational-memory@27a5195eaf90e4e2ca1302e3a31d4bb14df982a5"
         "https://github.com/MasuRii/pi-rtk-optimizer@d155d253cb2f1358e34e717d47a82ebccb08cb8e"
-        "https://github.com/elpapi42/pi-minimal-subagent@4c847a37b7d675470a8c5eb50d736d11ceac910a"
+        "npm:@gotgenes/pi-subagents@21.2.2"
         "https://github.com/Dwsy/pi-session-manager@c3e68d85ec8a2a818cb0ff1b0593bef71256054b"
         "npm:pi-powerline-footer@0.16.0"
       ];
