@@ -72,6 +72,7 @@
         "https://github.com/MasuRii/pi-rtk-optimizer@d155d253cb2f1358e34e717d47a82ebccb08cb8e"
         "https://github.com/elpapi42/pi-minimal-subagent@4c847a37b7d675470a8c5eb50d736d11ceac910a"
         "https://github.com/Dwsy/pi-session-manager@c3e68d85ec8a2a818cb0ff1b0593bef71256054b"
+        "npm:pi-powerline-footer@0.16.0"
       ];
     };
 
