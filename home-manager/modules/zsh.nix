@@ -95,7 +95,6 @@
 
         # powerlevel10k prompt (ported from ~/.zsh/.p10k.zsh)
         [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
-        eval $(keychain --eval --quiet ~/.ssh/ansible_key)
 
         # Allow `$ command` (for pasting snippets that include the prompt)
         function $ { "$@" }

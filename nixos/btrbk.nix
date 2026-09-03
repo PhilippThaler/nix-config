@@ -6,16 +6,18 @@
 # - ~/Nextcloud is its own subvolume (home/philipp/Nextcloud) and is therefore
 #   excluded automatically: btrfs snapshots/sends never cross subvolume
 #   boundaries (it is synced to the server by Nextcloud anyway).
-{...}: {
+{config, ...}: {
   services.btrbk.instances.main = {
     onCalendar = "daily";
     settings = {
+      backend = "btrfs-progs-sudo";
+
       snapshot_preserve_min = "2d";
       snapshot_preserve = "7d";
       target_preserve_min = "no";
       target_preserve = "14d 4w";
 
-      ssh_identity = "/root/.ssh/btrbk_key";
+      ssh_identity = config.age.secrets.btrbk_key.path;
       ssh_user = "philipp";
 
       volume."/" = {

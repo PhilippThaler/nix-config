@@ -12,6 +12,7 @@
     ./hardware-configuration.nix
     ./thinkfan.nix
     ./btrbk.nix
+    ./agenix.nix
   ];
 
   # ── Boot ──────────────────────────────────────────────────────────
@@ -89,6 +90,13 @@
     wrapperFeatures.gtk = true;
   };
   security.pam.services.swaylock = {};
+  security.pam.services.login = {
+    gnupg = {
+      enable = true;
+      storeOnly = true;
+      noAutostart = true;
+    };
+  };
 
   xdg.portal = {
     enable = true;
@@ -160,6 +168,8 @@
   services.fwupd.enable = true;
   services.openssh.enable = true;
   services.gnome.gnome-keyring.enable = true;
+  # gcr-ssh-agent competes with gpg-agent-as-ssh-agent for SSH_AUTH_SOCK; disable it.
+  services.gnome.gcr-ssh-agent.enable = false;
   security.polkit.enable = true;
   # let the fwupd-check user timer refresh LVFS metadata without an interactive prompt
   security.polkit.extraConfig = ''
@@ -199,6 +209,9 @@
     procps
     file
     sbctl
+    age # runtime dep for the agenix CLI + decrypting
+    jq # runtime dep for the agenix CLI
+    inputs.agenix.packages.${pkgs.system}.default
   ];
 
   # This value determines the NixOS release from which the default

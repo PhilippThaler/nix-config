@@ -15,6 +15,18 @@
     };
   };
 
+  systemd.user.services.agenix-import-gpg = {
+    Unit = {
+      Description = "Import mail GPG key from agenix";
+      ConditionPathExists = "/run/agenix/gpg_key";
+    };
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.gnupg}/bin/gpg --batch --import /run/agenix/gpg_key";
+    };
+    Install.WantedBy = ["default.target"];
+  };
+
   systemd.user.timers.mailsync = {
     Unit = {
       Description = "Run mbsync every 3 minutes";
@@ -31,9 +43,17 @@
   programs.gpg.enable = true;
   services.gpg-agent = {
     enable = true;
+    # Use gpg-agent as the SSH agent -> used for pam_gnupg
+    enableSshSupport = true;
     pinentry.package = pkgs.pinentry-egui;
     defaultCacheTtl = 1800; # 30min
     maxCacheTtl = 7200; # 2h
+    defaultCacheTtlSsh = 1800;
+    maxCacheTtlSsh = 7200;
+    # Required by pam_gnupg
+    extraConfig = ''
+      allow-preset-passphrase
+    '';
   };
 
   # ── Account: philipp@thaler.fyi (Spacemail) ───────────────────────
@@ -46,7 +66,7 @@
       address = "philipp@thaler.fyi";
       userName = "philipp@thaler.fyi";
 
-      passwordCommand = "pass show email/philipp@thaler.fyi";
+      passwordCommand = "cat /run/agenix/mail_password";
 
       imap = {
         host = "mail.spacemail.com";

@@ -18,7 +18,10 @@
     settings.general.fade = 1;
   };
 
-  services.gnome-keyring.enable = true;
+  services.gnome-keyring = {
+    enable = true;
+    components = ["secrets"];
+  };
 
   services.kdeconnect = {
     enable = true;
@@ -32,8 +35,6 @@
   };
 
   services.polkit-gnome.enable = true;
-
-  services.ssh-agent.enable = true;
 
   services.swaync.enable = true;
 
