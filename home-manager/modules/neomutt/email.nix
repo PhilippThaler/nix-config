@@ -46,10 +46,10 @@
     # Use gpg-agent as the SSH agent -> used for pam_gnupg
     enableSshSupport = true;
     pinentry.package = pkgs.pinentry-egui;
-    defaultCacheTtl = 1800; # 30min
-    maxCacheTtl = 7200; # 2h
-    defaultCacheTtlSsh = 1800;
-    maxCacheTtlSsh = 7200;
+    defaultCacheTtl = 31536000;
+    maxCacheTtl = 31536000;
+    defaultCacheTtlSsh = 31536000;
+    maxCacheTtlSsh = 31536000;
     # Required by pam_gnupg
     extraConfig = ''
       allow-preset-passphrase
