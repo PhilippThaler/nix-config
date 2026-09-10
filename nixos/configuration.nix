@@ -194,6 +194,9 @@
     nerd-fonts.inconsolata-lgc
     nerd-fonts.iosevka
     nerd-fonts.symbols-only
+    source-sans
+    source-sans-pro
+    roboto
   ];
 
   # ── System packages (system-wide tools only; user apps live in home-manager) ──
