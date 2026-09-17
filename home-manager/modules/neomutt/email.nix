@@ -76,8 +76,9 @@
 
       smtp = {
         host = "mail.spacemail.com";
-        port = 465;
+        port = 587;
         tls.enable = true;
+        tls.useStartTls = true;
       };
 
       mbsync = {
