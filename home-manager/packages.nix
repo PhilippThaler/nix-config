@@ -78,6 +78,7 @@ with pkgs; [
   ansible-lint
   gh
   cargo
+  yaak
   git-filter-repo
   nil
   alejandra
