@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Apply config changes. A script (not a zsh alias) so nixupdate can call it.
+set -euo pipefail
+
+cfg="${NIX_CONFIG:-$HOME/nix-config}"
+
+cd "$cfg"
+git add .
+sudo nixos-rebuild switch --flake "$cfg#nixos"

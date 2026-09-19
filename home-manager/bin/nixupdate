@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Update flake inputs, rebuild, and record the timestamp the waybar indicator reads.
+set -euo pipefail
+
+cfg="${NIX_CONFIG:-$HOME/nix-config}"
+state="${XDG_STATE_HOME:-$HOME/.local/state}/nixupd"
+mkdir -p "$state"
+
+cd "$cfg"
+update-releases
+nix flake update
+nixrebuild
+
+# set -e means a failed rebuild never reaches here, so the icon stays lit
+date +%s > "$state/last"
+
+notify-send 'Nix Update Complete'
+pkill -RTMIN+8 waybar || true

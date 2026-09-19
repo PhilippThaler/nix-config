@@ -108,6 +108,18 @@ window#waybar {
 #idle_inhibitor { color: #babbf1; }
 #custom-bluetooth { color: #85c1dc; }
 #custom-gammastep { color: #ef9f76; }
+
+/* Hidden while fresh: the module stays in the layout, so collapse it to zero size */
+#custom-nixupdate {
+    color: #e78284;
+    padding: 0 8px;
+    margin: 3px 0;
+}
+
+#custom-nixupdate.fresh {
+    padding: 0;
+    margin: 0;
+}
 #tray {
     padding: 0 8px;
 }

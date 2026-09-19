@@ -51,8 +51,6 @@
       swayconfig = "nvim ~/.config/sway/config";
       wbconf = "cd ~/.config/waybar && nvim ~/.config/waybar/config && cd -";
       nixconf = "cd ~/nix-config && nvim && cd -";
-      nixrebuild = "cd ~/nix-config && git add . && sudo nixos-rebuild switch --flake ~/nix-config#nixos && cd -";
-      nixupdate = "cd ~/nix-config && update-releases && nix flake update && nixrebuild && cd - && notify-send 'Nix Update Complete'";
       mutt = "neomutt";
       ranger = "yazi";
       open = "gio open";

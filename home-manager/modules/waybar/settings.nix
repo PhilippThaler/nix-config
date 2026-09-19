@@ -24,6 +24,7 @@
     "idle_inhibitor"
     "custom/bluetooth"
     "custom/gammastep"
+    "custom/nixupdate"
     "network"
     "clock"
     "tray"
@@ -143,6 +144,15 @@
     interval = 30;
     return-type = "json";
     on-click = "if pgrep -x .gammastep-wrap >/dev/null || pgrep -x gammastep >/dev/null; then pkill -x .gammastep-wrap; pkill -x gammastep; else gammastep -m wayland -c ~/.config/gammastep/config.ini & fi";
+    format = "{}";
+  };
+
+  "custom/nixupdate" = {
+    exec = "~/.config/waybar/scripts/nixupdate.sh";
+    interval = 3600;
+    signal = 8;
+    return-type = "json";
+    on-click = "~/.config/waybar/scripts/nixupdate-tab.sh";
     format = "{}";
   };
 }
