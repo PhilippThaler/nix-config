@@ -3,7 +3,9 @@
 in {
   programs.rofi = {
     enable = true;
-    font = "Inconsolata Nerd Font 13";
+    settings = {
+      font = "Inconsolata Nerd Font 13";
+    };
     theme = {
       "*" = {
         background = mkLiteral "#303446";
