@@ -138,10 +138,6 @@
           command = "floating enable, border normal";
           criteria = {app_id = "(?i)system-config-printer";};
         }
-        {
-          command = "focus";
-          criteria = {urgent = "latest";};
-        }
       ];
 
       keybindings = lib.mkOptionDefault (import ./keybindings.nix {inherit modifier term;});
