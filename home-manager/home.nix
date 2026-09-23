@@ -60,6 +60,11 @@ in {
     enable = true;
     enableZshIntegration = true;
   };
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+    enableZshIntegration = true;
+  };
 
   # ── git ───────────────────────────────────────────────────────────
   programs.git = {
@@ -91,6 +96,13 @@ in {
       package = pkgs.qogir-icon-theme;
     };
     gtk4.theme = null;
+    gtk3.bookmarks = [
+      "file:///home/philipp/Pictures"
+      "file:///home/philipp/Videos"
+      "file:///home/philipp/Downloads"
+      "file:///home/philipp/Projects"
+      "file:///home/philipp/Nextcloud"
+    ];
     gtk3.extraConfig.gtk-print-backends = "cups,file";
     gtk4.extraConfig.gtk-print-backends = "cups,file";
   };

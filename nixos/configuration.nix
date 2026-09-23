@@ -26,6 +26,7 @@
   };
 
   boot.kernelParams = ["psmouse.synaptics_intertouch=0"]; # touchpad: flaky RMI4/SMBus probe kills the PS/2 pointer device
+  boot.tmp.cleanOnBoot = true;
 
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.tpm2.enable = true;
@@ -74,11 +75,14 @@
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = ["nix-command" "flakes"];
   nix.settings.auto-optimise-store = true;
+  nix.settings.trusted-users = ["philipp"];
   nix.gc = {
     automatic = true;
     dates = "weekly";
     options = "--delete-older-than 30d";
   };
+
+  programs.nix-ld.enable = true;
 
   # ── Shell ─────────────────────────────────────────────────────────
   programs.zsh.enable = true;
@@ -180,8 +184,18 @@
     percentageAction = 5;
     criticalPowerAction = "Hibernate";
   };
+  systemd.services.battery-charge-threshold = {
+    description = "Cap ThinkPad battery charging";
+    wantedBy = ["multi-user.target"];
+    serviceConfig.Type = "oneshot";
+    script = ''
+      echo 75 > /sys/class/power_supply/BAT0/charge_control_start_threshold
+      echo 90 > /sys/class/power_supply/BAT0/charge_control_end_threshold
+    '';
+  };
 
   # ── Services ──────────────────────────────────────────────────────
+  services.journald.settings.Journal.SystemMaxUse = "500M";
   services.gvfs.enable = true;
   services.fwupd.enable = true;
   services.openssh.enable = true;

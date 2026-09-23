@@ -48,7 +48,6 @@ with pkgs; [
   ffmpegthumbnailer
   poppler-utils
   w3m
-  btop
   tldr
   duf
   gtrash
@@ -103,7 +102,6 @@ with pkgs; [
   gimp
   mpv
   imv
-  zathura
   galculator
   simple-scan
   nextcloud-client
