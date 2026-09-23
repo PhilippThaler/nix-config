@@ -128,8 +128,26 @@
   hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable = true;
 
-  # ── Printing (driverless/AirPrint via Avahi) ──────────────────────
-  services.printing.enable = true;
+  # ── Printing (driverless IPP Everywhere, pinned by IP) ────────────
+  services.printing = {
+    enable = true;
+    browsed.enable = false;
+  };
+  programs.system-config-printer.enable = true;
+  hardware.printers = {
+    ensurePrinters = [
+      {
+        name = "Brother_MFC_L2710DW_series";
+        location = "Home";
+        deviceUri = "ipp://10.69.30.50:631/ipp/print";
+        model = "everywhere";
+      }
+    ];
+    ensureDefaultPrinter = "Brother_MFC_L2710DW_series";
+  };
+  systemd.services.cups.postStart = lib.mkAfter ''
+    ${pkgs.cups}/bin/lpadmin -p Brother_MFC_L2710DW_series -o PageSize=A4 -o Duplex=DuplexNoTumble
+  '';
   services.avahi = {
     enable = true;
     nssmdns4 = true;

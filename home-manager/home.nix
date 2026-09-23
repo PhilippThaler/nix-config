@@ -91,6 +91,8 @@ in {
       package = pkgs.qogir-icon-theme;
     };
     gtk4.theme = null;
+    gtk3.extraConfig.gtk-print-backends = "cups,file";
+    gtk4.extraConfig.gtk-print-backends = "cups,file";
   };
 
   dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
