@@ -63,6 +63,7 @@ with pkgs; [
   cymbal
   ffmpeg
   yt-dlp
+  opencode
 
   # Dev
   neovim
