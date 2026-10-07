@@ -110,4 +110,14 @@ with pkgs; [
   inkscape
   seahorse
   xarchiver
+
+  (symlinkJoin {
+    name = "tome4-x11";
+    paths = [tome4];
+    nativeBuildInputs = [makeWrapper];
+    postBuild = ''
+      unlink $out/bin/tome4
+      makeWrapper ${tome4}/bin/tome4 $out/bin/tome4 --set SDL_VIDEODRIVER x11
+    '';
+  })
 ]

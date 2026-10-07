@@ -5,13 +5,13 @@
   autoPatchelfHook,
 }: stdenv.mkDerivation rec {
   pname = "cymbal";
-  version = "0.16.2";
+  version = "0.17.0";
 
   # fetchurl, not fetchzip: the tarball holds a single bare file with no root dir,
   # which makes nix-prefetch-url --unpack emit a hash fetchzip can never match.
   src = fetchurl {
     url = "https://github.com/1broseidon/cymbal/releases/download/v${version}/cymbal_v${version}_linux_x86_64.tar.gz";
-    hash = "sha256-8EYDVNi0KMvM4OkSSI4xTFqGF0pvYG6oHM9yGtjSCho=";
+    hash = "sha256-4aX8TxSifO9JJz3Q7yTqY84390anmGFPJvwFonPoRz8=";
   };
 
   nativeBuildInputs = [autoPatchelfHook];
