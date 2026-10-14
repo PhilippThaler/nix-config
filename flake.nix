@@ -16,6 +16,10 @@
       url = "github:ryantm/agenix/b027ee29d959fda4b60b57566d64c98a202e0feb";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
