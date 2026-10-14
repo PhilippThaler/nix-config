@@ -94,6 +94,7 @@ with pkgs; [
   nodejs_22
 
   # GUI apps
+  obsidian
   chromium
   spotify
   mqtt-explorer
