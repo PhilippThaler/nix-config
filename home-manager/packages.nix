@@ -93,6 +93,10 @@ with pkgs; [
   docker-compose
   nodejs_22
 
+  # Android / phone
+  scrcpy
+  android-tools
+
   # GUI apps
   obsidian
   chromium
