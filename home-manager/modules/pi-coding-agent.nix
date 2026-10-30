@@ -30,7 +30,7 @@
       "observational-memory" = {
         model = {
           provider = "opencode-go";
-          id = "deepseek-v4-flash";
+          id = "deepseek-v4.1-flash";
           thinking = "low";
         };
       };
@@ -39,18 +39,18 @@
         effortProfiles = {
           fast = {
             provider = "opencode-go";
-            id = "deepseek-v4-flash";
+            id = "deepseek-v4.1-flash";
             thinking = "medium";
           };
           balanced = {
             provider = "opencode-go";
-            id = "deepseek-v4-pro";
+            id = "deepseek-v4.1-flash";
             thinking = "high";
           };
           deep = {
             provider = "opencode-go";
-            id = "kimi-k2.7-code";
-            thinking = "xhigh";
+            id = "deepseek-v4.1-flash";
+            thinking = "max";
           };
         };
       };
