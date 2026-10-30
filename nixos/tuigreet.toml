@@ -1,0 +1,18 @@
+[display]
+show_time = true
+show_title = false
+
+[remember]
+username = true
+
+[theme]
+border = "#f4b8e4"
+title = "#ca9ee6"
+text = "#c6d0f5"
+container = "#303446"
+time = "#8caaee"
+greet = "#a6d189"
+prompt = "#8caaee"
+input = "#c6d0f5"
+action = "#838ba7"
+button = "#f4b8e4"
