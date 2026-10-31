@@ -122,10 +122,11 @@
   };
 
   # Login greeter (starts sway)
+  environment.etc."tuigreet/config.toml".source = ./tuigreet.toml;
   services.greetd = {
     enable = true;
     settings.default_session = {
-      command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd sway";
+      command = "${pkgs.tuigreet}/bin/tuigreet --cmd sway";
       user = "greeter";
     };
   };
