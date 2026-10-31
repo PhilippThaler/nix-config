@@ -29,6 +29,13 @@
       group = "users";
       mode = "0600";
     };
+    # WireGuard private + preshared key as an env file for the NM profile
+    wg_keys = {
+      file = ../secrets/wg_keys.age;
+      owner = "root";
+      group = "root";
+      mode = "0400";
+    };
     # GPG signing subkey, imported into philipp's keyring by a user service
     gpg_key = {
       file = ../secrets/gpg_key.age;

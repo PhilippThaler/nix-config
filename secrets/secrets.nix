@@ -8,5 +8,6 @@ in {
   "id_ed25519.age".publicKeys = recipients;
   "ansible_key.age".publicKeys = recipients;
   "mail_password.age".publicKeys = recipients;
+  "wg_keys.age".publicKeys = recipients;
   "gpg_key.age".publicKeys = recipients;
 }

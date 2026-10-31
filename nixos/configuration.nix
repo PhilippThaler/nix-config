@@ -13,6 +13,7 @@
     ./thinkfan.nix
     ./btrbk.nix
     ./agenix.nix
+    ./wireguard.nix
   ];
 
   # ── Boot ──────────────────────────────────────────────────────────
