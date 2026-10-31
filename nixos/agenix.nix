@@ -1,12 +1,12 @@
 {...}: {
   age.secrets = {
-    # Dedicated, passphrase-less backup key used by the btrbk service (root) to
-    # push snapshots to the server. Root-only, so it cannot be used interactively.
+    # Dedicated, passphrase-less backup key for pushing snapshots to the server.
+    # Owned by the `btrbk` service user, since services.btrbk runs the send as it.
     btrbk_key = {
       file = ../secrets/btrbk_key.age;
-      owner = "root";
-      group = "root";
-      mode = "0600";
+      owner = "btrbk";
+      group = "btrbk";
+      mode = "0400";
     };
     # Personal SSH identity (passphrase = login password, unlocked by pam_gnupg)
     id_ed25519 = {
