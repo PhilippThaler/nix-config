@@ -3,6 +3,8 @@
   scrolly,
   siggy,
   cymbal,
+  rea,
+  jadx-headless-mcp,
 }:
 with pkgs; [
   # Wayland / Sway
@@ -96,6 +98,13 @@ with pkgs; [
   # Android / phone
   scrcpy
   android-tools
+
+  # Reverse engineering (REA + analysis engines)
+  rea
+  ghidra
+  jdk21
+  apktool
+  jadx-headless-mcp
 
   # GUI apps
   obsidian

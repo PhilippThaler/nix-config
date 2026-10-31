@@ -2,7 +2,10 @@
   pkgs,
   config,
   ...
-}: {
+}: let
+  rea = pkgs.callPackage ../../pkgs/rea-agents {};
+  jadx = pkgs.callPackage ../../pkgs/jadx-headless-mcp {};
+in {
   programs.pi-coding-agent = {
     enable = true;
     configDir = "${config.home.homeDirectory}/.config/pi";
@@ -108,6 +111,29 @@
       ];
     };
   };
+
+  # REA MCP server. Declared here rather than through `rea setup` so the
+  # launcher is rebuilt with the store paths it actually points at.
+  # codemode exposure keeps 229 tool schemas out of context and gives scripts
+  # the untruncated evidence payload.
+  home.file."${config.programs.pi-coding-agent.configDir}/mcp.json".text =
+    builtins.toJSON {
+      mcpServers.rea = {
+        type = "stdio";
+        command = "${pkgs.nodejs_22}/bin/node";
+        args = ["${rea}/lib/node_modules/rea-agents/scripts/rea.mjs" "mcp"];
+        exposure = "codemode";
+        # Ghidra's first query imports + auto-analyses the target
+        timeout = 1200;
+        description = "Reverse engineering: native binaries via Ghidra, Android APKs, JS/Electron apps, websites, firmware, model artifacts.";
+        env = {
+          GHIDRA_INSTALL_DIR = "${pkgs.ghidra}/lib/ghidra";
+          JAVA_HOME = "${pkgs.jdk21}";
+          REA_JADX_MCP_JAR = "${jadx}/share/java/jadx-headless-mcp-0.7.1-all.jar";
+          REA_APKTOOL_COMMAND = "${pkgs.apktool}/bin/apktool";
+        };
+      };
+    };
 
   # Notify when pi finishes work — kitty OSC 99 desktop notification on agent_settled.
   home.file."${config.home.homeDirectory}/.config/pi/extensions/notify-on-settle.ts".text = ''
