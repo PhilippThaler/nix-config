@@ -27,15 +27,27 @@
   };
 
   boot.kernelParams = ["psmouse.synaptics_intertouch=0"]; # touchpad: flaky RMI4/SMBus probe kills the PS/2 pointer device
+  boot.kernel.sysctl."kernel.printk" = "3 4 1 7";
   boot.tmp.cleanOnBoot = true;
 
-  boot.initrd.systemd.enable = true;
   boot.initrd.systemd.tpm2.enable = true;
   boot.resumeDevice = "/dev/mapper/luks-24967593-22f2-49cd-8aee-1d03c77a9c05";
 
   # ── Networking ────────────────────────────────────────────────────
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
+  networking.firewall.allowedTCPPortRanges = [
+    {
+      from = 1714;
+      to = 1764;
+    }
+  ];
+  networking.firewall.allowedUDPPortRanges = [
+    {
+      from = 1714;
+      to = 1764;
+    }
+  ];
 
   # ── Locale / keymap ───────────────────────────────────────────────
   time.timeZone = "Europe/Vienna";
