@@ -1,4 +1,9 @@
-{pkgs, lib, config, ...}: {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: {
   # ── zsh (replaces antigen: plugins come from nixpkgs) ─────────────
   programs.zsh = {
     enable = true;
@@ -40,6 +45,7 @@
       sctl = "sudo systemctl";
       reboot = "systemctl reboot";
       ansible-playbook = "ansible-playbook --diff";
+      bc = "qalc";
       rm = "gtrash put";
       restore = "gtrash r";
       rmd = "command rm";

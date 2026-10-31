@@ -252,6 +252,7 @@
     wget
     curl
     htop
+    libqalculate
     pciutils
     usbutils
     psmisc
@@ -261,6 +262,8 @@
     dnsutils
     age # runtime dep for the agenix CLI + decrypting
     jq # runtime dep for the agenix CLI
+    easyeffects
+    pwvucontrol
     inputs.agenix.packages.${pkgs.system}.default
   ];
 
