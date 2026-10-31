@@ -95,6 +95,14 @@
     options = "--delete-older-than 30d";
   };
 
+  # build processes are children of nix-daemon, so weights must live there
+  nix.daemonCPUSchedPolicy = "batch";
+  nix.daemonIOSchedPriority = 6;
+  systemd.services.nix-daemon.serviceConfig = {
+    Nice = 10;
+    CPUWeight = 60;
+  };
+
   programs.nix-ld.enable = true;
 
   # ── Shell ─────────────────────────────────────────────────────────
