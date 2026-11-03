@@ -6,7 +6,51 @@
 # - ~/Nextcloud is its own subvolume (home/philipp/Nextcloud) and is therefore
 #   excluded automatically: btrfs snapshots/sends never cross subvolume
 #   boundaries (it is synced to the server by Nextcloud anyway).
-{config, ...}: {
+# - Every run reports its own result to the Uptime Kuma push monitor
+#   "btrbk backups (X1C)", so a missed or failed backup alerts from this host.
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  kumaPushUrl = config.age.secrets.kuma_btrbk_push_url.path;
+
+  btrbkRun = pkgs.writeShellApplication {
+    name = "btrbk-run";
+    runtimeInputs = [pkgs.btrbk pkgs.coreutils pkgs.curl pkgs.findutils];
+    text = ''
+      log=$(mktemp)
+      trap 'rm -f "$log"' EXIT
+
+      # btrbk keeps streaming its progress to the journal on stdout; errors go
+      # to stderr, which is kept to build the alert message and replayed after.
+      set +e
+      btrbk -c /etc/btrbk/main.conf run >&2 2> "$log"
+      status=$?
+      set -e
+
+      cat "$log" >&2
+
+      push() {
+        curl --silent --show-error --fail --max-time 20 --get \
+          "$(head -n 1 ${lib.escapeShellArg kumaPushUrl})" \
+          --data-urlencode "status=$1" \
+          --data-urlencode "msg=$2" || true
+      }
+
+      if [ "$status" -eq 0 ]; then
+        newest=$(find /btrbk_snapshots -maxdepth 1 -name 'home.*' -printf '%f\n' 2>/dev/null | sort -r | head -n 1 || true)
+        push up "''${newest:-unknown}"
+      else
+        msg=$(head -n 1 "$log")
+        push down "''${msg:-btrbk exit $status}"
+      fi
+
+      exit "$status"
+    '';
+  };
+in {
   services.btrbk.instances.main = {
     onCalendar = "daily";
     settings = {
@@ -30,6 +74,10 @@
       };
     };
   };
+
+  # mkForce, so the wrapper replaces the module's ExecStart instead of adding a
+  # second one (a oneshot unit would run both).
+  systemd.services."btrbk-main".serviceConfig.ExecStart = lib.mkForce "${btrbkRun}/bin/btrbk-run";
 
   # btrbk does not create snapshot_dir itself
   systemd.tmpfiles.rules = [
