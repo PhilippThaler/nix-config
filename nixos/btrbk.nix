@@ -20,17 +20,18 @@
     name = "btrbk-run";
     runtimeInputs = [pkgs.btrbk pkgs.coreutils pkgs.curl pkgs.findutils];
     text = ''
-      log=$(mktemp)
-      trap 'rm -f "$log"' EXIT
+      outlog=$(mktemp)
+      errlog=$(mktemp)
+      trap 'rm -f "$outlog" "$errlog"' EXIT
 
-      # btrbk keeps streaming its progress to the journal on stdout; errors go
-      # to stderr, which is kept to build the alert message and replayed after.
+      # Progress goes to the journal, and both streams are kept: the "Backup
+      # Summary" that names the sent snapshot is printed on stdout, errors on stderr.
       set +e
-      btrbk -c /etc/btrbk/main.conf run >&2 2> "$log"
-      status=$?
+      btrbk -c /etc/btrbk/main.conf run 2> "$errlog" | tee "$outlog" >&2
+      status=''${PIPESTATUS[0]}
       set -e
 
-      cat "$log" >&2
+      cat "$errlog" >&2
 
       push() {
         curl --silent --show-error --fail --max-time 20 --get \
@@ -40,10 +41,13 @@
       }
 
       if [ "$status" -eq 0 ]; then
-        newest=$(find /btrbk_snapshots -maxdepth 1 -name 'home.*' -printf '%f\n' 2>/dev/null | sort -r | head -n 1 || true)
-        push up "''${newest:-unknown}"
+        local_snap=$(find /btrbk_snapshots -maxdepth 1 -name 'home.*' -printf '%f\n' 2>/dev/null | sort -r | head -n 1 || true)
+        # The summary names the received (target) subvolume as ">>> <path>" for an
+        # incremental send and "*** <path>" for a non-incremental one.
+        sent_snap=$(grep -E '^(>>> |[*][*][*] )' "$outlog" 2>/dev/null | tail -n 1 | sed -E 's|.*/||' || true)
+        push up "sent ''${sent_snap:-?} (local ''${local_snap:-unknown})"
       else
-        msg=$(head -n 1 "$log")
+        msg=$(head -n 1 "$errlog")
         push down "''${msg:-btrbk exit $status}"
       fi
 
