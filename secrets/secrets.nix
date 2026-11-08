@@ -10,4 +10,5 @@ in {
   "mail_password.age".publicKeys = recipients;
   "wg_keys.age".publicKeys = recipients;
   "gpg_key.age".publicKeys = recipients;
+  "kuma_btrbk_push_url.age".publicKeys = recipients;
 }

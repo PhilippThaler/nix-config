@@ -43,5 +43,13 @@
       group = "users";
       mode = "0600";
     };
+    # Uptime Kuma push URL of the "btrbk backups (X1C)" monitor, read by the
+    # btrbk wrapper (runs as the btrbk service user).
+    kuma_btrbk_push_url = {
+      file = ../secrets/kuma_btrbk_push_url.age;
+      owner = "btrbk";
+      group = "btrbk";
+      mode = "0400";
+    };
   };
 }
