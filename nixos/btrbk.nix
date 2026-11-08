@@ -11,6 +11,7 @@
     onCalendar = "daily";
     settings = {
       backend = "btrfs-progs-sudo";
+      stream_compress = "zstd";
 
       snapshot_preserve_min = "2d";
       snapshot_preserve = "7d";

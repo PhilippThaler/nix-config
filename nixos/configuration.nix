@@ -26,9 +26,22 @@
     sortKey = "lanza";
   };
 
-  boot.kernelParams = ["psmouse.synaptics_intertouch=0"]; # touchpad: flaky RMI4/SMBus probe kills the PS/2 pointer device
+  boot.kernelParams = [
+    "psmouse.synaptics_intertouch=0" # touchpad: flaky RMI4/SMBus probe kills the PS/2 pointer device
+    "oops=panic"
+    "panic=10"
+  ];
   boot.kernel.sysctl."kernel.printk" = "3 4 1 7";
+  boot.kernel.sysctl."kernel.sysrq" = 1; # default 16 disables REISUB, leaving power-off as the only recovery
   boot.tmp.cleanOnBoot = true;
+
+  boot.crashDump.enable = true;
+  boot.crashDump.reservedMemory = "256M";
+
+  # Intel 8265 (ibt-12-16) hangs on BT audio teardown when the radio is autosuspended
+  boot.extraModprobeConfig = ''
+    options btusb enable_autosuspend=0
+  '';
 
   boot.initrd.systemd.tpm2.enable = true;
   boot.resumeDevice = "/dev/mapper/luks-24967593-22f2-49cd-8aee-1d03c77a9c05";
@@ -147,6 +160,15 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     wireplumber.enable = true;
+    # A2DP only: HSP/HFP locks headsets to mono 16 kHz and lets capture streams be dragged onto their mic
+    wireplumber.configPackages = [
+      (pkgs.writeTextDir "share/wireplumber/wireplumber.conf.d/51-bluetooth-a2dp-only.conf" ''
+        monitor.bluez.properties = {
+          bluez5.roles = [ a2dp_sink a2dp_source ]
+          bluez5.codecs = [ sbc_xq sbc ]
+        }
+      '')
+    ];
   };
 
   # ── Bluetooth ─────────────────────────────────────────────────────
@@ -218,6 +240,7 @@
 
   # ── Services ──────────────────────────────────────────────────────
   services.journald.settings.Journal.SystemMaxUse = "500M";
+  services.journald.settings.Journal.SyncIntervalSec = "5s";
   services.gvfs.enable = true;
   services.fwupd.enable = true;
   services.openssh.enable = true;
