@@ -42,10 +42,19 @@
 
       if [ "$status" -eq 0 ]; then
         local_snap=$(find /btrbk_snapshots -maxdepth 1 -name 'home.*' -printf '%f\n' 2>/dev/null | sort -r | head -n 1 || true)
-        # The summary names the received (target) subvolume as ">>> <path>" for an
-        # incremental send and "*** <path>" for a non-incremental one.
-        sent_snap=$(grep -E '^(>>> |[*][*][*] )' "$outlog" 2>/dev/null | tail -n 1 | sed -E 's|.*/||' || true)
-        push up "sent ''${sent_snap:-?} (local ''${local_snap:-unknown})"
+        # ">>> /path/home.<date>" is a received subvolume (incremental), "*** ..."
+        # a received one (non-incremental): either means this run sent something.
+        sent_line=$(grep -E '^(>>> |[*][*][*] )' "$outlog" 2>/dev/null | tail -n 1 || true)
+
+        if [ -n "$sent_line" ]; then
+          sent_snap=''${sent_line##*/}
+          push up "sent ''${sent_snap:-?} (local ''${local_snap:-unknown})"
+        else
+          # Nothing was received, so nothing was sent. The summary only names a
+          # target subvolume when one was deleted ("--- /mnt/disk5/backup/x1c/home.<date>").
+          target_snap=$(grep -E '^--- ' "$outlog" 2>/dev/null | sed -E 's|^--- ||' | grep -Ev '^/btrbk_snapshots/' | sed -E 's|.*/||' | sort -r | head -n 1 || true)
+          push up "nothing to send (local ''${local_snap:-unknown}, target ''${target_snap:-?})"
+        fi
       else
         msg=$(head -n 1 "$errlog")
         push down "''${msg:-btrbk exit $status}"
