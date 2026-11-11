@@ -78,6 +78,7 @@ with pkgs; [
   uv
   ansible
   ansible-lint
+  hadolint
   gh
   cargo
   yaak
