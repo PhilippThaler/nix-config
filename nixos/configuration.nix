@@ -99,13 +99,30 @@
 
   # ── Nix ───────────────────────────────────────────────────────────
   nixpkgs.config.allowUnfree = true;
-  nix.settings.experimental-features = ["nix-command" "flakes"];
-  nix.settings.auto-optimise-store = true;
-  nix.settings.trusted-users = ["philipp"];
+  nix.settings = {
+    experimental-features = ["nix-command" "flakes"];
+    trusted-users = ["philipp"];
+    auto-optimise-store = false;
+    max-jobs = 1;
+    cores = 2;
+  };
+  nix.optimise.automatic = true;
   nix.gc = {
     automatic = true;
     dates = "weekly";
     options = "--delete-older-than 30d";
+  };
+  systemd.services.nix-gc.serviceConfig = {
+    Nice = 19;
+    CPUWeight = 10;
+    IOWeight = 10;
+    IOSchedulingClass = "idle";
+  };
+  systemd.services.nix-optimise.serviceConfig = {
+    Nice = 19;
+    CPUWeight = 10;
+    IOWeight = 10;
+    IOSchedulingClass = "idle";
   };
 
   # build processes are children of nix-daemon, so weights must live there
@@ -114,6 +131,18 @@
   systemd.services.nix-daemon.serviceConfig = {
     Nice = 10;
     CPUWeight = 60;
+  };
+
+  # disk swap is on the encrypted nvme: compress in RAM first instead of thrashing kcryptd
+  zramSwap = {
+    enable = true;
+    memoryPercent = 50;
+    algorithm = "zstd";
+  };
+  # default 10%/20% of 15 GiB means ~1.5 GiB of dirty pages before writeback starts
+  boot.kernel.sysctl = {
+    "vm.dirty_background_ratio" = 5;
+    "vm.dirty_ratio" = 10;
   };
 
   programs.nix-ld.enable = true;

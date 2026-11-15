@@ -5,6 +5,7 @@
   cymbal,
   rea,
   jadx-headless-mcp,
+  yaak-bin,
 }:
 with pkgs; [
   # Wayland / Sway
@@ -81,7 +82,7 @@ with pkgs; [
   hadolint
   gh
   cargo
-  yaak
+  yaak-bin
   git-filter-repo
   nil
   alejandra

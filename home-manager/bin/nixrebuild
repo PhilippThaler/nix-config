@@ -6,5 +6,9 @@ cfg="${NIX_CONFIG:-$HOME/nix-config}"
 
 cd "$cfg"
 git add .
-# -j1 --cores 2: this is a 4-thread laptop, don't let nix build 16-wide
-sudo nixos-rebuild switch --flake "$cfg#nixos" -j1 --cores 2
+# Build as philipp so builders land in nix-daemon's cgroup (Nice=10, CPUWeight=60);
+# running the whole thing under sudo gives root a local store and skips those weights.
+# nice(1) not -p Nice=: the user manager rejects scheduling properties on a scope.
+exec systemd-run --user --scope --collect -q \
+  -p CPUWeight=40 -p IOWeight=40 -- \
+  nice -n 10 nixos-rebuild switch --flake "$cfg#nixos" --elevate=sudo

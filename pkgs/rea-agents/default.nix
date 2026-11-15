@@ -44,7 +44,7 @@ let
     '';
 
     outputHashMode = "recursive";
-    outputHash = "sha256-BROS6i0lSZJN7huEj/ykH5LOlo6K4pXJiR66NjTZ6Oc=";
+    outputHash = "sha256-AcNEGnal1cm9DcphfHziFyP3uBCmbBGWklk4iwaWrW0=";
   };
 in
 stdenvNoCC.mkDerivation {

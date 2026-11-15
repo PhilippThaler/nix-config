@@ -9,6 +9,7 @@
   cymbal = pkgs.callPackage ../pkgs/cymbal {};
   rea = pkgs.callPackage ../pkgs/rea-agents {};
   jadx-headless-mcp = pkgs.callPackage ../pkgs/jadx-headless-mcp {};
+  yaak-bin = pkgs.callPackage ../pkgs/yaak-bin {};
 in {
   # Auto-import modules: a flat foo.nix is used directly, a foo/ dir uses foo/default.nix
   imports = builtins.map (
@@ -26,7 +27,7 @@ in {
   home.stateVersion = "26.05";
 
   programs.home-manager.enable = true;
-  home.packages = import ./packages.nix {inherit pkgs scrolly siggy cymbal rea jadx-headless-mcp;};
+  home.packages = import ./packages.nix {inherit pkgs scrolly siggy cymbal rea jadx-headless-mcp yaak-bin;};
 
   # ── Environment ───────────────────────────────────────────────────
   home.sessionVariables = {
