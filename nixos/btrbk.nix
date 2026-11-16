@@ -18,20 +18,11 @@
 
   btrbkRun = pkgs.writeShellApplication {
     name = "btrbk-run";
-    runtimeInputs = [pkgs.btrbk pkgs.coreutils pkgs.curl pkgs.findutils];
+    runtimeInputs = [pkgs.bash pkgs.btrbk pkgs.coreutils pkgs.curl pkgs.findutils];
     text = ''
       outlog=$(mktemp)
       errlog=$(mktemp)
       trap 'rm -f "$outlog" "$errlog"' EXIT
-
-      # Progress goes to the journal, and both streams are kept: the "Backup
-      # Summary" that names the sent snapshot is printed on stdout, errors on stderr.
-      set +e
-      btrbk -c /etc/btrbk/main.conf run 2> "$errlog" | tee "$outlog" >&2
-      status=''${PIPESTATUS[0]}
-      set -e
-
-      cat "$errlog" >&2
 
       push() {
         curl --silent --show-error --fail --max-time 20 --get \
@@ -39,6 +30,47 @@
           --data-urlencode "status=$1" \
           --data-urlencode "msg=$2" || true
       }
+
+      # The timer is overdue while the laptop sleeps and fires on resume, before
+      # wifi has re-associated: wait for the server instead of failing instantly.
+      wait_for_target() {
+        for i in $(seq 1 60); do
+          if timeout 2 bash -c '</dev/tcp/10.69.20.50/22' 2>/dev/null; then
+            return 0
+          fi
+          if [ "$i" -eq 1 ]; then
+            echo "waiting for 10.69.20.50:22 to become reachable" >&2
+          fi
+          sleep 5
+        done
+        return 1
+      }
+
+      # Progress goes to the journal, and both streams are kept: the "Backup
+      # Summary" that names the sent snapshot is printed on stdout, errors on stderr.
+      run_btrbk() {
+        : > "$outlog"
+        : > "$errlog"
+        set +e
+        btrbk -c /etc/btrbk/main.conf run 2> "$errlog" | tee "$outlog" >&2
+        status=''${PIPESTATUS[0]}
+        set -e
+
+        cat "$errlog" >&2
+      }
+
+      if ! wait_for_target; then
+        push down "10.69.20.50:22 unreachable after 5min"
+        exit 1
+      fi
+
+      run_btrbk
+      if [ "$status" -ne 0 ]; then
+        echo "btrbk failed (exit $status), retrying in 2min" >&2
+        sleep 120
+        wait_for_target || true
+        run_btrbk
+      fi
 
       if [ "$status" -eq 0 ]; then
         local_snap=$(find /btrbk_snapshots -maxdepth 1 -name 'home.*' -printf '%f\n' 2>/dev/null | sort -r | head -n 1 || true)
@@ -91,6 +123,12 @@ in {
   # mkForce, so the wrapper replaces the module's ExecStart instead of adding a
   # second one (a oneshot unit would run both).
   systemd.services."btrbk-main".serviceConfig.ExecStart = lib.mkForce "${btrbkRun}/bin/btrbk-run";
+
+  # covers cold boots, where the timer fires before the network is up
+  systemd.services."btrbk-main".unitConfig = {
+    Wants = [ "network-online.target" ];
+    After = [ "network-online.target" ];
+  };
 
   # btrbk does not create snapshot_dir itself
   systemd.tmpfiles.rules = [
